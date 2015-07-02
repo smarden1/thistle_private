@@ -8,9 +8,8 @@ import predicates.Characters._
 import scala.reflect.runtime.universe._
 
 class PredicateSpec extends FunSpec {
-	import core.MatchPredicate.literal2Predicate
 
-	def series : Vector[Char] =
+	implicit val series : Vector[Char] =
 		Vector('a', 'b', 'c', 'd', 'e', 'f')
 
 	val charWild : MatchPredicate[Char] =
@@ -28,14 +27,14 @@ class PredicateSpec extends FunSpec {
 	describe("combining predicates") {
 		it("should be able to combine predicates of the same type") {
 			val twoWilds = wild && wild
-			val ms = MatchState(List(0), 1)(series)
+			val ms = MatchState(List(0), 1)
 			
 			assert(twoWilds(ms) == wild(ms))
 		}
 
 		it("should be able to combine predicates of a different type") {
 			val twoWilds = wild && charWild
-			val ms = MatchState(List(0), 1)(series)
+			val ms = MatchState(List(0), 1)
 			
 			assert(twoWilds(ms) == wild(ms))
 		}

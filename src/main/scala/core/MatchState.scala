@@ -33,6 +33,9 @@ case class MatchState[+T](
 
 	def toElementState() : ElementState[T] =
 		ElementState(elementIndex)
+
+	override def toString() : String =
+		"MatchState(%s, %s)".format(previousMatchIndexes, elementIndex)
 }
 
 // no previous matches

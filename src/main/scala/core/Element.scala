@@ -70,4 +70,7 @@ case class Element[+T](elementIndex : Int)(implicit val series : Vector[T]) exte
 		elementIndex >= 0,
 		"The elementIndex cannot be a negative integer."
 	)
+
+	override def toString() : String =
+		"Element(%s)".format(elementIndex)
 }

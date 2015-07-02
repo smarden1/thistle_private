@@ -47,8 +47,9 @@ class NodeSpec extends FunSpec {
 
 	describe("depthWalk") {
 		it("should walk in order for simple tree") {
+			println(Node.depthWalk(simpleTree()).map(_.label).toList)
 			assert(
-				Node.depthWalk(simpleTree()).map(_.label) ==
+				Node.depthWalk(simpleTree()).map(_.label).toList ==
 				List("a", "b", "c", "d", "e", "f")
 			)
 		}
@@ -57,7 +58,7 @@ class NodeSpec extends FunSpec {
 	describe("breadthWalk") {
 		it("should walk in order for a simple tree") {
 			assert(
-				Node.breadthWalk(simpleTree()).map(_.label) ==
+				Node.breadthWalk(simpleTree()).map(_.label).toList ==
 				List("a", "b", "e", "c", "d", "f")
 			)
 		}
@@ -73,17 +74,17 @@ class NodeSpec extends FunSpec {
 			val f = e.createAndAddChild("f")
 
 			assert(
-				Node.prefixWalk(f).map(extractNodeLabels) ==
+				Node.prefixWalk(f).map(extractNodeLabels).toList ==
 				List(List("f"))
 			)
 
 			assert(
-				Node.prefixWalk(e).map(extractNodeLabels) ==
+				Node.prefixWalk(e).map(extractNodeLabels).toList ==
 				List(List("e"), List("f", "e"))
 			)
 
 			assert(
-				Node.prefixWalk(a).map(extractNodeLabels) ==
+				Node.prefixWalk(a).map(extractNodeLabels).toList ==
 				List(
 					List("a"),
 					List("b", "a"),
@@ -98,7 +99,7 @@ class NodeSpec extends FunSpec {
 		}
 		it("should find all prefixs in complex tree") {
 			assert(
-				Node.prefixWalk(complexTree).map(extractNodeLabels) ==
+				Node.prefixWalk(complexTree).map(extractNodeLabels).toList ==
 				List(
 					List("a"),
 					List("b", "a"),

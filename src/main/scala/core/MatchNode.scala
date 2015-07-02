@@ -16,9 +16,8 @@ case class MutableMatchNode(elementIndex : Int, stepIndex : Int)
 	def createAndAddChild(elementIndex : Int) : this.type =
 		addChild(MutableMatchNode(elementIndex, stepIndex + 1))
 
-	// IS THIS RIGHT?
-	def walk : Stream[MutableMatchNode] =
-		Node.depthWalk(children)
+	def iterator : Iterator[MutableMatchNode] =
+		Node.depthWalk(this)
 
 	def toImmutableNode[T](implicit series : Vector[T]) : ImmutableMatchNode[T] = {
 		this match {
@@ -36,9 +35,6 @@ case class ImmutableMatchNode[T](
 	extends MatchNode[ImmutableMatchNode[T]]
 	with ElementLike[T] {
 
-	def walks : Iterator[ImmutableMatchNode[T]] =
-		Node.dWalk(this)
-
-	def walk : Stream[ImmutableMatchNode[T]] =
-		Node.depthWalk(children)
+	def iterator : Iterator[ImmutableMatchNode[T]] =
+		Node.depthWalk(this)
 }

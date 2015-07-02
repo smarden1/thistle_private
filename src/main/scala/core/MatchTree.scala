@@ -12,17 +12,7 @@ package core
 // should predicates be named steps?
 class MatchTree[T](predicates : Query[T], val root : ImmutableMatchNode[T])(implicit val series : Vector[T]) {
 
-	// does this make sense to have an apply here?
-	def apply(idx : Int) : Match[T] =
-		walk(idx)
-
 	def iterator : Iterator[Match[T]] =
-		walk.iterator
-
-	def length : Int =
-		walk.length
-
-	def walk : Stream[Match[T]] =
 		Node.prefixWalk(root).map(Match(_, predicates))
 
 	def findAllMatches() : Iterator[Match[T]] =

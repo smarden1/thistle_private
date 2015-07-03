@@ -1,7 +1,5 @@
 package core
 
-import scala.reflect.runtime.universe._
-
 trait MatchPredicate[-T] {
 	def apply(matchState : MatchState[T]) : Boolean
 

@@ -9,7 +9,7 @@ class MatchTreeBuilder[T](query : Query[T])(implicit val series : Vector[T]) {
 	protected val root = new MutableMatchNode(-1, -1) with Root[MutableMatchNode]
 
 	protected[core] def addStep(element : T, index : Int) : Unit = {
-		prefixIterator.foreach{ nodeList =>
+		(Iterator(List(root)) ++ Node.prefixWalk(root.children)).foreach{ nodeList =>
 			val matchState = MatchState(nodeList.map(_.stepIndex), index)
 
 			if (isValidMatch(matchState)) {
@@ -31,9 +31,6 @@ class MatchTreeBuilder[T](query : Query[T])(implicit val series : Vector[T]) {
 			.lift(matchState.matchCount)
 			.map(_(matchState))
 			.getOrElse(false)
-
-	protected def prefixIterator =
-		(Iterator(List(root)) ++ Node.prefixWalk[MutableMatchNode](root))
 }
 
 object MatchTreeBuilder {

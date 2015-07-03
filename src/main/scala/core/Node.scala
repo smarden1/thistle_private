@@ -42,51 +42,49 @@ abstract class MutableNode[T <: Node[T]] extends Node[T] {
 	}
 }
 
-// make this a trait eh?
-// or just put it all on node
 object Node {
-	def depthWalk[T <: Node[T]](node : T) : Iterator[T] = {
-		@tailrec
-		def _depthWalk[T <: Node[T]](stack : List[T], acc: Iterator[T]) : Iterator[T] =
-			stack match {
-				case head::tail => _depthWalk(head.children ++ tail, acc ++ Iterator(head))
-				case _ => acc
-			}
-		_depthWalk(node.children, Iterator(node))
-	}
+	@tailrec
+	def depthWalk[T <: Node[T]](stack : List[T], acc: Iterator[T] = Iterator.empty) : Iterator[T] =
+		stack match {
+			case head::tail => depthWalk(head.children ++ tail, acc ++ Iterator(head))
+			case _ => acc
+		}
 
-	def breadthWalk[T <: Node[T]](node : T) : Iterator[T] = {
-		@tailrec
-		def _breadthWalk[T <: Node[T]](queue : List[T], acc: Iterator[T]) : Iterator[T] =
-			queue match {
-				case head::tail => _breadthWalk(tail ++ head.children, acc ++ Iterator(head))
-				case _ => acc
-			}
-		_breadthWalk(node.children, Iterator(node))
-	}
+	def depthWalk[T <: Node[T]](node : T) : Iterator[T] =
+		depthWalk(node.children, Iterator(node))
 
-	def prefixWalk[T <: Node[T]](node : T) : Iterator[List[T]] = {
-		@tailrec
-		def _pWalk[T <: Node[T]](stack : List[T], prefix : List[T], prefixCounts : List[Int], acc: Iterator[List[T]]) : Iterator[List[T]] =
-			stack match {
-				case head::tail => {
-					val shouldDropHead = prefixCounts.headOption.map(_ == 0).getOrElse(false)
+	@tailrec
+	def breadthWalk[T <: Node[T]](queue : List[T], acc: Iterator[T] = Iterator.empty) : Iterator[T] =
+		queue match {
+			case head::tail => breadthWalk(tail ++ head.children, acc ++ Iterator(head))
+			case _ => acc
+		}
+
+	def breadthWalk[T <: Node[T]](node : T) : Iterator[T] =
+		breadthWalk(node.children, Iterator(node))
+
+	@tailrec
+	def prefixWalk[T <: Node[T]](stack : List[T], prefix : List[T] = Nil, prefixCounts : List[Int] = Nil, acc: Iterator[List[T]] = Iterator.empty) : Iterator[List[T]] =
+		stack match {
+			case head::tail => {
+				val shouldDropHead = prefixCounts.headOption.map(_ == 0).getOrElse(false)
 				
-					val p = if (shouldDropHead) prefix.tail else prefix
-					val pc = if (shouldDropHead) prefixCounts.tail else prefixCounts
-					val pc2 = if (!pc.isEmpty) (pc.head - 1) :: pc.tail else pc
+				val p = if (shouldDropHead) prefix.tail else prefix
+				val pc = if (shouldDropHead) prefixCounts.tail else prefixCounts
+				val pc2 = if (!pc.isEmpty) (pc.head - 1) :: pc.tail else pc
 
-					_pWalk(
-						head.children ++ tail,
-						if (head.hasChildren) head :: p else p,
-						if (head.hasChildren) head.children.size :: pc2 else pc2,
-						acc ++ Iterator(head::p)
-					)
-				}
-				case _ => acc
+				prefixWalk(
+					head.children ++ tail,
+					if (head.hasChildren) head :: p else p,
+					if (head.hasChildren) head.children.size :: pc2 else pc2,
+					acc ++ Iterator(head::p)
+				)
 			}
-		_pWalk(headOrChildren(node), Nil, Nil, Iterator.empty)
-	}
+			case _ => acc
+		}
+
+	def prefixWalk[T <: Node[T]](node : T) : Iterator[List[T]] =
+		prefixWalk(List(node))
 
 	def maxDepth[T <: Node[T]](stack : List[(T, Int)]) : Int =
 		stack match {
@@ -96,12 +94,6 @@ object Node {
 
 	def maxDepth[T <: Node[T]](node : T) : Int =
 		maxDepth(List((node, 1)))
-
-	private def headOrChildren[T <: Node[T]](node: T): List[T] =
-		node match {
-			case _ : Root[_] => node.children
-			case _ => List(node)
-		}
 }
 
 

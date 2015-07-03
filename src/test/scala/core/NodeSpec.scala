@@ -47,7 +47,6 @@ class NodeSpec extends FunSpec {
 
 	describe("depthWalk") {
 		it("should walk in order for simple tree") {
-			println(Node.depthWalk(simpleTree()).map(_.label).toList)
 			assert(
 				Node.depthWalk(simpleTree()).map(_.label).toList ==
 				List("a", "b", "c", "d", "e", "f")
@@ -118,9 +117,9 @@ class NodeSpec extends FunSpec {
 		it("should work on a root") {
 			val node = new MutableMatchNode(0, 0) with Root[MutableMatchNode]
 			val node2 = new MutableMatchNode(0, 0)
-			assert(Node.prefixWalk[MutableMatchNode](node).size == 0) // seq has iterator and itertor doesnt include
-			node.createAndAddChild(1)
-			assert(Node.prefixWalk[MutableMatchNode](node).size == 1)
+			assert(Node.prefixWalk[MutableMatchNode](node).size == 1) // seq has iterator and itertor doesnt include
+			node.createAndAddChild(2)
+			assert(Node.prefixWalk[MutableMatchNode](node).size == 2)
 			assert(Node.prefixWalk[MutableMatchNode](node2).size == 1)
 		}
 	}

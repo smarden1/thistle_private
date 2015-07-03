@@ -114,13 +114,11 @@ class NodeSpec extends FunSpec {
 				)
 			)
 		}
-		it("should work on a root") {
-			val node = new MutableMatchNode(0, 0) with Root[MutableMatchNode]
-			val node2 = new MutableMatchNode(0, 0)
-			assert(Node.prefixWalk[MutableMatchNode](node).size == 1) // seq has iterator and itertor doesnt include
+		it("should work with adding a child") {
+			val node = new MutableMatchNode(0, 0)
+			assert(Node.prefixWalk[MutableMatchNode](node).size == 1)
 			node.createAndAddChild(2)
 			assert(Node.prefixWalk[MutableMatchNode](node).size == 2)
-			assert(Node.prefixWalk[MutableMatchNode](node2).size == 1)
 		}
 	}
 

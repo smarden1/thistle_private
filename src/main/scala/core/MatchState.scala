@@ -27,8 +27,7 @@ case class MatchState[+T](
 	def previousMatchedElement : Element[T] =
 		Element(previousMatchedIndex)
 
-	// is this a silly name?
-	def matchCount : Int =
+	def size : Int =
 		previousMatchIndexes.size
 
 	def toElementState() : ElementState[T] =

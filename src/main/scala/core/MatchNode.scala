@@ -19,12 +19,8 @@ case class MutableMatchNode(elementIndex : Int, stepIndex : Int)
 	def iterator : Iterator[MutableMatchNode] =
 		Node.depthWalk(this)
 
-	def toImmutableNode[T](implicit series : Vector[T]) : ImmutableMatchNode[T] = {
-		this match {
-			case _ : Root[MutableMatchNode] => new ImmutableMatchNode(elementIndex, stepIndex, children.map(_.toImmutableNode)) with Root[ImmutableMatchNode[T]]
-			case _ => new ImmutableMatchNode(elementIndex, stepIndex, children.map(_.toImmutableNode))
-		}
-	}
+	def toImmutableNode[T](implicit series : Vector[T]) : ImmutableMatchNode[T] =
+		new ImmutableMatchNode(elementIndex, stepIndex, children.map(_.toImmutableNode))
 }
 
 // is this poorly named? with series here?

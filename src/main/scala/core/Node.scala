@@ -23,13 +23,6 @@ abstract class Node[T <: Node[T]]() extends Iterable[T] {
 		!children.isEmpty
 }
 
-trait Root[T <: Node[T]] extends Node[T] {}
-
-object Root {
-	implicit def root2NodeList[T <: Node[T]](root : Root[T]) : List[T] =
-		root.children
-}
-
 abstract class MutableNode[T <: Node[T]] extends Node[T] {
 	private var _children = MutableList[T]()
 

@@ -6,7 +6,7 @@ class MatchTreeBuilder[T](query : Query[T])(implicit val series : Vector[T]) {
 
 	protected val querySize = query.size
 
-	protected val root = new MutableMatchNode(-1, -1) with Root[MutableMatchNode]
+	protected val root = new MutableMatchNode(-1, -1)
 
 	protected[core] def addStep(element : T, index : Int) : Unit = {
 		(Iterator(List(root)) ++ Node.prefixWalk(root.children)).foreach{ nodeList =>
@@ -28,7 +28,7 @@ class MatchTreeBuilder[T](query : Query[T])(implicit val series : Vector[T]) {
 
 	def isValidMatch(matchState : MatchState[T]) : Boolean =
 		query
-			.lift(matchState.matchCount)
+			.lift(matchState.size)
 			.map(_(matchState))
 			.getOrElse(false)
 }

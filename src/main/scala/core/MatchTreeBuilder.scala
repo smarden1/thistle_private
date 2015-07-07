@@ -8,21 +8,26 @@ class MatchTreeBuilder[T](query : Query[T])(implicit val series : Vector[T]) {
 
 	protected val root = new MutableMatchNode(-1, -1)
 
-	protected[core] def addStep(element : T, index : Int) : Unit = {
-		(Iterator(List(root)) ++ Node.prefixWalk(root.children)).foreach{ nodeList =>
+	protected[core] def addStep(index : Int) : Unit = {
+		Node.subTreeWalk(root.children).foreach{ nodeList =>
 			val matchState = MatchState(nodeList.map(_.stepIndex), index)
 
 			if (isValidMatch(matchState)) {
 				nodeList.last.createAndAddChild(index)
 			}
 		}
+
+		if (isValidMatch(MatchState(Nil, index))) {
+			root.createAndAddChild(index)
+		}
 	}
 
 	def build() : MatchTree[T] = {
 		series
 			.zipWithIndex
-			.foreach{case (element, index) => addStep(element, index)}
+			.foreach{case (element, index) => addStep(index)}
 
+		println(root.toImmutableNode.children)
 		new MatchTree(query, root.toImmutableNode)
 	}
 

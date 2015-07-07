@@ -14,5 +14,7 @@ object General {
 
 	def ofType[T: ClassTag]: ElementPredicate[T] =
 		(m: ElementState[T]) => m.value.isInstanceOf[T]
-		
+
+	def equals[T](value : T): ElementPredicate[T] =
+		(m: ElementState[T]) => m.value == value
 }

@@ -79,18 +79,18 @@ class NodeSpec extends FunSpec {
 
 			assert(
 				Node.prefixWalk(e).map(extractNodeLabels).toList ==
-				List(List("e"), List("f", "e"))
+				List(List("e"), List("e", "f"))
 			)
 
 			assert(
 				Node.prefixWalk(a).map(extractNodeLabels).toList ==
 				List(
 					List("a"),
-					List("b", "a"),
-					List("c", "b", "a"),
-					List("d", "b", "a"),
-					List("e", "a"),
-					List("f", "e", "a")
+					List("a", "b"),
+					List("a", "b", "c"),
+					List("a", "b", "d"),
+					List("a", "e"),
+					List("a", "e", "f")
 				)
 			)
 
@@ -101,16 +101,16 @@ class NodeSpec extends FunSpec {
 				Node.prefixWalk(complexTree).map(extractNodeLabels).toList ==
 				List(
 					List("a"),
-					List("b", "a"),
-					List("e", "b", "a"),
-					List("k", "e", "b", "a"),
-					List("f", "b", "a"),
-					List("c", "a"),
-					List("g", "c", "a"),
-					List("d", "a"),
-					List("h", "d", "a"),
-					List("i", "d", "a"),
-					List("j", "d", "a")
+					List("a", "b"),
+					List("a", "b", "e"),
+					List("a", "b", "e", "k"),
+					List("a", "b", "f"),
+					List("a", "c"),
+					List("a", "c", "g"),
+					List("a", "d"),
+					List("a", "d", "h"),
+					List("a", "d", "i"),
+					List("a", "d", "j")
 				)
 			)
 		}
@@ -119,6 +119,50 @@ class NodeSpec extends FunSpec {
 			assert(Node.prefixWalk[MutableMatchNode](node).size == 1)
 			node.createAndAddChild(2)
 			assert(Node.prefixWalk[MutableMatchNode](node).size == 2)
+		}
+	}
+
+	describe("subTreeWalk") {
+		it("should find all subtrees for a simple tree") {
+			val a = SimpleNode("a")
+			val b = a.createAndAddChild("b")
+			val c = b.createAndAddChild("c")
+			val d = b.createAndAddChild("d")
+			val e = a.createAndAddChild("e")
+			val f = e.createAndAddChild("f")
+
+			assert(
+				Node.subTreeWalk(f).map(extractNodeLabels).toList ==
+				List(List("f"))
+			)
+
+			assert(
+				Node.subTreeWalk(e).map(extractNodeLabels).toList ==
+				List(List("e", "f"))
+			)
+
+			assert(
+				Node.subTreeWalk(a).map(extractNodeLabels).toList ==
+				List(
+					List("a", "b", "c"),
+					List("a", "b", "d"),
+					List("a", "e", "f")
+				)
+			)
+		}
+
+		it("should find all subtrees in complex tree") {
+			assert(
+				Node.subTreeWalk(complexTree).map(extractNodeLabels).toList ==
+				List(
+					List("a", "b", "e", "k"),
+					List("a", "b", "f"),
+					List("a", "c", "g"),
+					List("a", "d", "h"),
+					List("a", "d", "i"),
+					List("a", "d", "j")
+				)
+			)
 		}
 	}
 

@@ -72,7 +72,7 @@ object Node {
 		stack match {
 			case head::tail => {
 				val shouldDropHead = prefixCounts.headOption.map(_ == 0).getOrElse(false)
-				
+
 				val p = if (shouldDropHead) prefix.tail else prefix
 				val pc = if (shouldDropHead) prefixCounts.tail else prefixCounts
 				val pc2 = if (!pc.isEmpty) (pc.head - 1) :: pc.tail else pc
@@ -81,7 +81,7 @@ object Node {
 					head.children ++ tail,
 					if (head.hasChildren) head :: p else p,
 					if (head.hasChildren) head.children.size :: pc2 else pc2,
-					acc ++ Iterator(head::p)
+					acc ++ Iterator((head::p).reverse)
 				)
 			}
 			case _ => acc
@@ -89,6 +89,34 @@ object Node {
 
 	def prefixWalk[T <: Node[T]](node : T) : Iterator[List[T]] =
 		prefixWalk(List(node))
+
+	@tailrec
+	def subTreeWalk[T <: Node[T]](
+		stack : List[T],
+		prefix : List[T] = Nil,
+		prefixCounts : List[Int] = Nil,
+		acc: Iterator[List[T]] = Iterator.empty) : Iterator[List[T]] =
+
+		stack match {
+			case head::tail => {
+				val shouldDropHead = prefixCounts.headOption.map(_ == 0).getOrElse(false)
+
+				val p = if (shouldDropHead) prefix.tail else prefix
+				val pc = if (shouldDropHead) prefixCounts.tail else prefixCounts
+				val pc2 = if (!pc.isEmpty) (pc.head - 1) :: pc.tail else pc
+
+				subTreeWalk(
+					head.children ++ tail,
+					if (head.hasChildren) head :: p else p,
+					if (head.hasChildren) head.children.size :: pc2 else pc2,
+					acc ++ (if (head.children.isEmpty) Iterator((head::p).reverse) else Iterator.empty)
+				)
+			}
+			case _ => acc
+		}
+
+	def subTreeWalk[T <: Node[T]](node: T) : Iterator[List[T]] =
+		subTreeWalk(List(node))
 
 	def maxDepth[T <: Node[T]](stack : List[(T, Int)]) : Int =
 		stack match {

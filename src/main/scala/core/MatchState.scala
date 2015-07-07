@@ -4,6 +4,8 @@ package core
 // has previous matches
 // indexes should not be a sequence but should be an array or something optimized
 // signatures look weird with elementIndex
+// 
+// pass in optional value here?
 case class MatchState[+T](
 	previousMatchIndexes : Seq[Int],
 	override val elementIndex : Int)(implicit override val series : Vector[T]) extends ElementState[T](elementIndex) {

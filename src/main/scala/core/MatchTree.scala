@@ -13,7 +13,7 @@ package core
 class MatchTree[T](predicates : Query[T], val root : ImmutableMatchNode[T])(implicit val series : Vector[T]) {
 
 	def iterator : Iterator[Match[T]] =
-		Node.prefixWalk(root.children).map(Match(_, predicates))
+		Node.subTreeWalk(root.children).map(Match(_, predicates))
 
 	def findAllMatches() : Iterator[Match[T]] =
 		iterator
@@ -65,11 +65,11 @@ class MatchTree[T](predicates : Query[T], val root : ImmutableMatchNode[T])(impl
 }
 
 object MatchTree {
-	def apply[T](query : Query[T])(series : Vector[T]) : MatchTree[T] =
+	def apply[T](query : Query[T])(implicit series : Vector[T]) : MatchTree[T] =
 		MatchTreeBuilder(query)(series)
 
 	// todo double check this
 	// make a test
-	def apply[T](headPredicate: ElementPredicate[T], tailPredicates : MatchPredicate[T]*)(series : Vector[T]) =
+	def apply[T](headPredicate: ElementPredicate[T], tailPredicates : MatchPredicate[T]*)(implicit series : Vector[T]) =
 		MatchTreeBuilder(Query(headPredicate, tailPredicates:_*))(series)
 }

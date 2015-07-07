@@ -41,20 +41,12 @@ trait ElementPredicate[-T] extends MatchPredicate[T] {
 		AnonymousElementPredicate( (matchState : ElementState[U]) => (this(matchState) || that(matchState) && !(this(matchState) && that(matchState))))
 }
 
-// maybe match and element predicates should be combined together into one trait
-
 case class AnonymousMatchPredicate[-T](predicateFn : MatchState[T] => Boolean) extends MatchPredicate[T] {
-	// type erasure
-	//def this(predicateFn : MatchState[T] => Option[Boolean]) = this(MatchPredicateImplicits.matchPredicateOption2Boolean(predicateFn))
-
 	def apply(matchState : MatchState[T]) : Boolean =
 		predicateFn(matchState)
 }
 
 case class AnonymousElementPredicate[-T](predicateFn : ElementState[T] => Boolean) extends ElementPredicate[T] {
-	// type erasure
-	//def this(predicateFn : MatchState[T] => Option[Boolean]) = this(MatchPredicateImplicits.matchPredicateOption2Boolean(predicateFn))
-
 	def apply(elementState : ElementState[T]) : Boolean =
 		predicateFn(elementState)
 }
@@ -73,7 +65,6 @@ trait MatchPredicateImplicits {
 			case _ => false
 		}
 
-	// TODO make this an implicit class?
 	implicit def literal2Predicate[T](predicateFn : MatchState[T] => Boolean) : MatchPredicate[T] =
 		AnonymousMatchPredicate(predicateFn)
 

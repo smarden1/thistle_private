@@ -23,7 +23,6 @@ case class MutableMatchNode(elementIndex : Int, stepIndex : Int)
 		new ImmutableMatchNode(elementIndex, stepIndex, children.map(_.toImmutableNode))
 }
 
-// is this poorly named? with series here?
 case class ImmutableMatchNode[T](
 	elementIndex : Int,
 	stepIndex : Int,

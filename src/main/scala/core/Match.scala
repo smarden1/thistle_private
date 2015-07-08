@@ -1,7 +1,7 @@
 package core
 
 // rename nodes
-case class Match[T](nodes : List[ImmutableMatchNode[T]], predicates : Query[T])(implicit val series : Vector[T]) {
+case class Match[T](nodes : List[ImmutableMatchNode[T]], predicates : Query[T])(implicit private val series : Vector[T]) {
 	def isEmpty : Boolean =
 		nodes.isEmpty
 

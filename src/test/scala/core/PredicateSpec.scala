@@ -1,11 +1,10 @@
+package core
+
 import org.scalatest.FunSpec
-
-import core._
-import predicates.General._
-
-import predicates.Characters._
-
 import scala.reflect.runtime.universe._
+
+import predicates.General._
+import predicates.Characters._
 
 class PredicateSpec extends FunSpec {
 

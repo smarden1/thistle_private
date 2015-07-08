@@ -1,6 +1,7 @@
+package core
+
 import org.scalatest.FunSpec
 
-import core._
 import predicates.General
 
 class MatchTreeSpec extends FunSpec {

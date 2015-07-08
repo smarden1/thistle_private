@@ -1,16 +1,6 @@
 package core
 
-
-// List(Match(ImmutableMatchNode, ImmutableMatchNode), Match(ImmutableMatchNode, ImmutableMatchNode))
-// MatchIterator(Match(Node, Node, Node), Match(Node,))
-// or
-// MatchIterator(List(T, T, T), Match(T,T))
-// also ImmutableMatch may be a terrible name
-// 
-// MatchTree(query, series).findAll
-// 
-// should predicates be named steps?
-class MatchTree[T](predicates : Query[T], val root : ImmutableMatchNode[T])(implicit val series : Vector[T]) {
+class MatchTree[T](predicates : Query[T], val root : ImmutableMatchNode[T])(implicit private val series : Vector[T]) {
 
 	def iterator : Iterator[Match[T]] =
 		Node.terminalPathWalk(root.children).map(Match(_, predicates))
@@ -68,8 +58,6 @@ object MatchTree {
 	def apply[T](query : Query[T])(implicit series : Vector[T]) : MatchTree[T] =
 		MatchTreeBuilder(query)(series)
 
-	// todo double check this
-	// make a test
 	def apply[T](headPredicate: ElementPredicate[T], tailPredicates : MatchPredicate[T]*)(implicit series : Vector[T]) =
 		MatchTreeBuilder(Query(headPredicate, tailPredicates:_*))(series)
 }

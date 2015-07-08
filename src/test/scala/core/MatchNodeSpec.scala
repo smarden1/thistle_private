@@ -1,6 +1,6 @@
+package core
 
 import org.scalatest.FunSpec
-import core._
 
 class MatchNodeSpec extends FunSpec {
 

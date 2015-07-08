@@ -1,5 +1,7 @@
+package core
+
 import org.scalatest.FunSpec
-import core._
+
 import predicates.{Indexes, General}
 
 class MatchSequenceSpec extends FunSpec with MatchSequenceImplicits {

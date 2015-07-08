@@ -1,14 +1,14 @@
 package core
 
-class MatchTreeBuilder[T](query : Query[T])(implicit val series : Vector[T]) {
+class MatchTreeBuilder[T](query : Query[T])(implicit private val series : Vector[T]) {
 
 	require(query.size > 0, "Query cannot be empty")
 
-	protected val querySize = query.size
+	private val querySize = query.size
 
-	protected val root = new MutableMatchNode(-1, -1)
+	private val root = new MutableMatchNode(-1, -1)
 
-	protected[core] def addStep(index : Int) : Unit = {
+	private def addStep(index : Int) : Unit = {
 		Node.allPathsWalk(root.children).foreach{ nodeList =>
 			val matchState = MatchState(nodeList.map(_.stepIndex), index)
 
@@ -22,6 +22,12 @@ class MatchTreeBuilder[T](query : Query[T])(implicit val series : Vector[T]) {
 		}
 	}
 
+	private[core] def isValidMatch(matchState : MatchState[T]) : Boolean =
+		query
+			.lift(matchState.size)
+			.map(_(matchState))
+			.getOrElse(false)
+
 	def build() : MatchTree[T] = {
 		series
 			.zipWithIndex
@@ -29,12 +35,6 @@ class MatchTreeBuilder[T](query : Query[T])(implicit val series : Vector[T]) {
 
 		new MatchTree(query, root.toImmutableNode)
 	}
-
-	def isValidMatch(matchState : MatchState[T]) : Boolean =
-		query
-			.lift(matchState.size)
-			.map(_(matchState))
-			.getOrElse(false)
 }
 
 object MatchTreeBuilder {

@@ -1,3 +1,5 @@
+package core
+
 import org.scalatest.FunSpec
 
 import core._
@@ -52,12 +54,6 @@ class MatchTreeBuilderSpec extends FunSpec {
 			val mt = new MatchTreeBuilder(Query(!wild))
 			
 			assert(!mt.isValidMatch(ms))
-		}
-	}
-
-	describe("addStep") {
-		it("should add a step when appropriate") {
-
 		}
 	}
 }

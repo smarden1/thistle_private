@@ -1,5 +1,6 @@
+package core
+
 import org.scalatest.FunSpec
-import core._
 
 class NodeSpec extends FunSpec {
 

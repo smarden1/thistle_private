@@ -164,6 +164,20 @@ class NodeSpec extends FunSpec {
 				)
 			)
 		}
+
+		it("should find all subtrees in complex tree given a list of children") {
+			assert(
+				Node.subTreeWalk(complexTree.children).map(extractNodeLabels).toList ==
+				List(
+					List("b", "e", "k"),
+					List("b", "f"),
+					List("c", "g"),
+					List("d", "h"),
+					List("d", "i"),
+					List("d", "j")
+				)
+			)
+		}
 	}
 
 	describe("maxDepth") {

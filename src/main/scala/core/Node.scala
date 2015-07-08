@@ -62,6 +62,7 @@ object Node {
 	def breadthWalk[T <: Node[T]](node : T) : Iterator[T] =
 		breadthWalk(node.children, Iterator(node))
 
+// todo combine prefix and subtree to use the same internals
 	@tailrec
 	def prefixWalk[T <: Node[T]](
 		stack : List[T],

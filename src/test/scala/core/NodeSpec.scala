@@ -63,7 +63,7 @@ class NodeSpec extends FunSpec {
 		}
 	}
 
-	describe("prefixWalk") {
+	describe("allPathsWalk") {
 		it("should find all prefixs for a simple tree") {
 			val a = SimpleNode("a")
 			val b = a.createAndAddChild("b")
@@ -73,17 +73,17 @@ class NodeSpec extends FunSpec {
 			val f = e.createAndAddChild("f")
 
 			assert(
-				Node.prefixWalk(f).map(extractNodeLabels).toList ==
+				Node.allPathsWalk(f).map(extractNodeLabels).toList ==
 				List(List("f"))
 			)
 
 			assert(
-				Node.prefixWalk(e).map(extractNodeLabels).toList ==
+				Node.allPathsWalk(e).map(extractNodeLabels).toList ==
 				List(List("e"), List("e", "f"))
 			)
 
 			assert(
-				Node.prefixWalk(a).map(extractNodeLabels).toList ==
+				Node.allPathsWalk(a).map(extractNodeLabels).toList ==
 				List(
 					List("a"),
 					List("a", "b"),
@@ -98,7 +98,7 @@ class NodeSpec extends FunSpec {
 		}
 		it("should find all prefixs in complex tree") {
 			assert(
-				Node.prefixWalk(complexTree).map(extractNodeLabels).toList ==
+				Node.allPathsWalk(complexTree).map(extractNodeLabels).toList ==
 				List(
 					List("a"),
 					List("a", "b"),
@@ -116,13 +116,13 @@ class NodeSpec extends FunSpec {
 		}
 		it("should work with adding a child") {
 			val node = new MutableMatchNode(0, 0)
-			assert(Node.prefixWalk[MutableMatchNode](node).size == 1)
+			assert(Node.allPathsWalk[MutableMatchNode](node).size == 1)
 			node.createAndAddChild(2)
-			assert(Node.prefixWalk[MutableMatchNode](node).size == 2)
+			assert(Node.allPathsWalk[MutableMatchNode](node).size == 2)
 		}
 	}
 
-	describe("subTreeWalk") {
+	describe("terminalPathWalk") {
 		it("should find all subtrees for a simple tree") {
 			val a = SimpleNode("a")
 			val b = a.createAndAddChild("b")
@@ -132,17 +132,17 @@ class NodeSpec extends FunSpec {
 			val f = e.createAndAddChild("f")
 
 			assert(
-				Node.subTreeWalk(f).map(extractNodeLabels).toList ==
+				Node.terminalPathWalk(f).map(extractNodeLabels).toList ==
 				List(List("f"))
 			)
 
 			assert(
-				Node.subTreeWalk(e).map(extractNodeLabels).toList ==
+				Node.terminalPathWalk(e).map(extractNodeLabels).toList ==
 				List(List("e", "f"))
 			)
 
 			assert(
-				Node.subTreeWalk(a).map(extractNodeLabels).toList ==
+				Node.terminalPathWalk(a).map(extractNodeLabels).toList ==
 				List(
 					List("a", "b", "c"),
 					List("a", "b", "d"),
@@ -153,7 +153,7 @@ class NodeSpec extends FunSpec {
 
 		it("should find all subtrees in complex tree") {
 			assert(
-				Node.subTreeWalk(complexTree).map(extractNodeLabels).toList ==
+				Node.terminalPathWalk(complexTree).map(extractNodeLabels).toList ==
 				List(
 					List("a", "b", "e", "k"),
 					List("a", "b", "f"),
@@ -167,7 +167,7 @@ class NodeSpec extends FunSpec {
 
 		it("should find all subtrees in complex tree given a list of children") {
 			assert(
-				Node.subTreeWalk(complexTree.children).map(extractNodeLabels).toList ==
+				Node.terminalPathWalk(complexTree.children).map(extractNodeLabels).toList ==
 				List(
 					List("b", "e", "k"),
 					List("b", "f"),
@@ -205,5 +205,18 @@ class NodeSpec extends FunSpec {
 			assert(Node.maxDepth(Nil) == 0)
 		}
 	}
-	
+}
+
+case class SimpleNode(label : String) extends MutableNode[SimpleNode]() {
+	def createAndAddChild(label : String) : SimpleNode = {
+		val node = SimpleNode(label)
+		addChild(node)
+		node
+	}
+
+	def iterator() : Iterator[SimpleNode] =
+		Node.depthWalk(this)
+
+	override def toString() : String =
+		"SimpleNode(%s)".format(label)
 }

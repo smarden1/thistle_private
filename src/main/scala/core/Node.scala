@@ -62,9 +62,21 @@ object Node {
 	def breadthWalk[T <: Node[T]](node : T) : Iterator[T] =
 		breadthWalk(node.children, Iterator(node))
 
-// todo combine prefix and subtree to use the same internals
+	def allPathsWalk[T <: Node[T]](nodes: List[T]) =
+		pathWalk(true, nodes)
+
+	def allPathsWalk[T <: Node[T]](node : T) : Iterator[List[T]] =
+		allPathsWalk(List(node))
+
+	def terminalPathWalk[T <: Node[T]](node: T) : Iterator[List[T]] =
+		terminalPathWalk(List(node))
+
+	def terminalPathWalk[T <: Node[T]](nodes: List[T]) : Iterator[List[T]] =
+		pathWalk(false, nodes)
+
 	@tailrec
-	def prefixWalk[T <: Node[T]](
+	private def pathWalk[T <: Node[T]](
+		includeAllNodes: Boolean,
 		stack : List[T],
 		prefix : List[T] = Nil,
 		prefixCounts : List[Int] = Nil,
@@ -78,46 +90,16 @@ object Node {
 				val pc = if (shouldDropHead) prefixCounts.tail else prefixCounts
 				val pc2 = if (!pc.isEmpty) (pc.head - 1) :: pc.tail else pc
 
-				prefixWalk(
+				pathWalk(
+					includeAllNodes,
 					head.children ++ tail,
 					if (head.hasChildren) head :: p else p,
 					if (head.hasChildren) head.children.size :: pc2 else pc2,
-					acc ++ Iterator((head::p).reverse)
+					acc ++ (if (includeAllNodes || head.children.isEmpty) Iterator((head::p).reverse) else Iterator.empty)
 				)
 			}
 			case _ => acc
 		}
-
-	def prefixWalk[T <: Node[T]](node : T) : Iterator[List[T]] =
-		prefixWalk(List(node))
-
-	@tailrec
-	def subTreeWalk[T <: Node[T]](
-		stack : List[T],
-		prefix : List[T] = Nil,
-		prefixCounts : List[Int] = Nil,
-		acc: Iterator[List[T]] = Iterator.empty) : Iterator[List[T]] =
-
-		stack match {
-			case head::tail => {
-				val shouldDropHead = prefixCounts.headOption.map(_ == 0).getOrElse(false)
-
-				val p = if (shouldDropHead) prefix.tail else prefix
-				val pc = if (shouldDropHead) prefixCounts.tail else prefixCounts
-				val pc2 = if (!pc.isEmpty) (pc.head - 1) :: pc.tail else pc
-
-				subTreeWalk(
-					head.children ++ tail,
-					if (head.hasChildren) head :: p else p,
-					if (head.hasChildren) head.children.size :: pc2 else pc2,
-					acc ++ (if (head.children.isEmpty) Iterator((head::p).reverse) else Iterator.empty)
-				)
-			}
-			case _ => acc
-		}
-
-	def subTreeWalk[T <: Node[T]](node: T) : Iterator[List[T]] =
-		subTreeWalk(List(node))
 
 	def maxDepth[T <: Node[T]](stack : List[(T, Int)]) : Int =
 		stack match {
@@ -127,22 +109,6 @@ object Node {
 
 	def maxDepth[T <: Node[T]](node : T) : Int =
 		maxDepth(List((node, 1)))
-}
-
-
-// for testing
-case class SimpleNode(label : String) extends MutableNode[SimpleNode]() {
-	def createAndAddChild(label : String) : SimpleNode = {
-		val node = SimpleNode(label)
-		addChild(node)
-		node
-	}
-
-	def iterator() : Iterator[SimpleNode] =
-		Node.depthWalk(this)
-
-	override def toString() : String =
-		"SimpleNode(%s)".format(label)
 }
 
 // alternate node will represent the first match for an alternate query

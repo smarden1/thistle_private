@@ -46,11 +46,11 @@ class MatchSequenceSpec extends FunSpec with MatchSequenceImplicits {
 
 	describe("find") {
 		it("should find the first item that satisfies the predicate") {
-			assert(example.find(Indexes.index(4)) == Some(4))
+			assert(example.find(Indexes.atIndex(4)) == Some(4))
 		}
 
 		it("should return None if no item that satisfies a predicate") {
-			assert(example.find(Indexes.index(14)) == None)
+			assert(example.find(Indexes.atIndex(14)) == None)
 		}
 	}
 }

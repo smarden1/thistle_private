@@ -4,11 +4,11 @@ case class MatchSequence[T](sequence: Seq[T]) {
 
 	private lazy implicit val series = sequence.toVector
 
-	def filter(es : ElementPredicate[T]) =
+	def filter(ep : ElementPredicate[T]) =
 		series
 			.view
 			.zipWithIndex
-			.filter{case(k, i) => es(new ElementState(i){override lazy val value = k})}
+			.filter{case(k, i) => ep(new ElementState(i){override lazy val value = k})}
 			.map(_._1)
 			.force
 
@@ -26,11 +26,11 @@ case class MatchSequence[T](sequence: Seq[T]) {
 	def count(es: ElementPredicate[T]) : Int =
 		filter(es).length
 
-	def find(es: ElementPredicate[T]) : Option[T] =
+	def find(ep: ElementPredicate[T]) : Option[T] =
 		series
 			.view
 			.zipWithIndex
-			.find{case(k, i) => es(new ElementState(i){override lazy val value = k})}
+			.find{case(k, i) => ep(new ElementState(i){override lazy val value = k})}
 			.map(_._1)
 
 	// is there at least one completed query?

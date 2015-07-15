@@ -9,7 +9,6 @@ object General {
 	val wild : ElementPredicate[Any] =
 		(m: ElementState[Any]) => true
 
-	/** you probably only want me for testing **/
 	val missing = !wild
 
 	def ofType[T: ClassTag]: ElementPredicate[T] =

@@ -1,33 +1,28 @@
 package examples.webevent
 
 import predicates.General.ofType
-import predicates.Indexes.intervening
+//import predicates.Indexes.intervening
 import examples.webevent._
 import examples.webevent.Predicates.{clicked, referredBy, currentElementContainsListing}
+import core.Query
 
 object Queries {
 
-	val PurchasedFromSearch = List(
+	val PurchasedFromSearch = Query(
 		ofType[SearchEvent],
 		ofType[ListingEvent] && clicked,
 		ofType[PurchaseEvent] && referredBy && currentElementContainsListing
 	)
 
-	// val PurchasedFromSearch = List(
-	// 	ofType[SearchEvent],
-	// 	ofType[ListingEvent] && clicked,
-	// 	ofType[PurchaseEvent] && referredBy && currentElementContainsListing
-	// )
-
-	val PurchaseChannel = List(
+	val PurchaseChannel = Query(
 		ofType[ListingsDisplay],
 		ofType[ListingEvent] && clicked,
 		ofType[PurchaseEvent] && referredBy && currentElementContainsListing
 	)
 
-	val PostLogin = List(
-		ofType[SearchEvent],
-		intervening(2)
+	val PostLogin = Query(
+		ofType[SearchEvent]
+		//intervening(2)
 	)
 
 	// would be nice to be able to construct arbitrary long queries to find paths
@@ -36,11 +31,6 @@ object Queries {
 
 
 /*
-* can matchstate have a specific type for no previous matches?
-* can make implicit on collections to findAll or findNext and take this type of matchState
-* implicit to make collections have a match on them
-* Query type where first element is this matchState and then some variable number
-*
 * traversing the results of a tree
 * find the count of siblings?
 * how many other listings from the same shop that were not purchased did we look at

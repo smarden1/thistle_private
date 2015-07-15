@@ -2,6 +2,8 @@ package examples.webevent
 
 import core.{MatchState, MatchPredicate, MatchPredicateImplicits, ElementState}
 
+import predicates.Matches
+
 object Predicates  {
 
 	val referredBy : MatchPredicate[WebEvent] = {
@@ -14,25 +16,17 @@ object Predicates  {
 			m.value.pageId == m.previousMatchedValue.pageId
 	}
 
-	val prevMatchContainsListing : MatchPredicate[WebEvent] = {
-		m : MatchState[WebEvent] =>
-			((m.previousMatchedValue, m.value) match {
-				case (prev: ListingsDisplay, cur: ListingEvent) => prev.listingIds.contains(cur.listingId)
-				case _ => false
-			})
+	val prevMatchContainsListing : MatchPredicate[ListingsDisplay] = {
+		Matches.previousMatchComparator(
+			(prev: ListingsDisplay, cur: ListingEvent) => prev.listingIds.contains(cur.listingId)
+		)
 	}
 
-	val currentElementContainsListing : MatchPredicate[WebEvent] = {
-		m : MatchState[WebEvent] =>
-			((m.previousMatchedValue, m.value) match {
-				case (cur: ListingsDisplay, prev: ListingEvent) => cur.listingIds.contains(prev.listingId)
-				case _ => false
-			})
-	}
+	val currentElementContainsListing : MatchPredicate[ListingEvent] =
+		Matches.previousMatchComparator(
+			(prev: ListingEvent, cur: ListingsDisplay) => cur.listingIds.contains(prev.listingId)
+		)
 
 	val clicked =
 		referredBy && prevMatchContainsListing
-
-	// absract out previous matched event property matches this property
-	// wish we had message passing
 }

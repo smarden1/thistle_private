@@ -4,19 +4,7 @@ import scala.collection.mutable.MutableList
 
 import scala.annotation.tailrec
 
-
-// TODO
-// from now on, there is no root and the matchtree is the root
-// the match add will determine if there is a parent or not and the current step
-// think about whether this is the correct type signature or if +T will suffice
-// learn more about covariance and contravariance
-// 
-// would be neat to have a pretty print
 abstract class Node[T <: Node[T]]() extends Iterable[T] {
-	//val statsInitializer : StatsInitializer
-	//val matchStats = statsInitializer.initialize(this)
-	//private var _alternateMatch : Option[AlternateNode] = None
-
 	def children : List[T]
 
 	def hasChildren() : Boolean =
@@ -110,7 +98,3 @@ object Node {
 	def maxDepth[T <: Node[T]](node : T) : Int =
 		maxDepth(List((node, 1)))
 }
-
-// alternate node will represent the first match for an alternate query
-// should alternate be mutable and the reference to it be immutable?
-case class AlternateNode(elementIndex : Int) {}

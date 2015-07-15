@@ -1,11 +1,5 @@
 package core
 
-
-// has previous matches
-// indexes should not be a sequence but should be an array or something optimized
-// signatures look weird with elementIndex
-// 
-// pass in optional value here?
 case class MatchState[+T](
 	previousMatchIndexes : Seq[Int],
 	override val elementIndex : Int)(implicit override val series : Vector[T]) extends ElementState[T](elementIndex) {
@@ -35,6 +29,9 @@ case class MatchState[+T](
 	def toElementState() : ElementState[T] =
 		ElementState(elementIndex)
 
+	def changeElementIndex(i : Int) : MatchState[T] =
+		MatchState(previousMatchIndexes, i)(series)
+
 	override def toString() : String =
 		"MatchState(%s, %s)".format(previousMatchIndexes, elementIndex)
 }
@@ -54,9 +51,3 @@ object ElementState {
 	def apply[T](elementIndex : Int)(implicit series : Vector[T]) : ElementState[T] =
 		new ElementState(elementIndex)
 }
-
-// should matchState subclass matchState or vice versa?
-// predicate(matchState) && predicate(elementState) == predicate(matchState)
-// FIX matchState to not be case class and add matchStateLike back into matchState
-
-// should there be a type for hasOneMatchAlready, twoMatchesAlready, etc

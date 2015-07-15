@@ -1,6 +1,6 @@
 package predicates
 
-import core.{MatchPredicate, MatchPredicateImplicits, ElementState}
+import core.{MatchPredicate, ElementState}
 
 object Characters {
 	

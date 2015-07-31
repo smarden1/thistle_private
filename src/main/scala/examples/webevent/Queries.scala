@@ -1,4 +1,4 @@
-package examples.webevent
+/*package examples.webevent
 
 import predicates.General.ofType
 //import predicates.Indexes.intervening
@@ -41,3 +41,4 @@ object Queries {
 *
 * some way to find endless matches so we can find tabbed browsing - maybe just extend the query to be the size of the input?
  */
+*/

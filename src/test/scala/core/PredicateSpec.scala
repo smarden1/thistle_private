@@ -4,7 +4,7 @@ import org.scalatest.FunSpec
 import scala.reflect.runtime.universe._
 
 import predicates.General._
-import predicates.Characters._
+import predicates.Character._
 
 class PredicateSpec extends FunSpec {
 

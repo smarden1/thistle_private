@@ -23,7 +23,6 @@ object General {
 		_ofType[T, Any]
 	}
 
-	// any?
 	def equals[T](value : T): ElementPredicate[T] =
 		(m: ElementState[T]) => m.value == value
 }

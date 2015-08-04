@@ -2,7 +2,7 @@ package predicates
 
 import core.{MatchPredicate, ElementState}
 
-object Characters {
+object Character {
 	
 	def isCharacter(char : Char) : MatchPredicate[Char] =
 		(ms : ElementState[Char]) => ms.value == char

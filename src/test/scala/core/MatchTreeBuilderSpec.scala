@@ -6,7 +6,7 @@ import core._
 import predicates.General._
 import predicates.Indexes
 
-import predicates.Characters._
+import predicates.Character._
 
 class MatchTreeBuilderSpec extends FunSpec {
 	implicit val series : Vector[Char] =

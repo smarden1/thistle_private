@@ -2,7 +2,7 @@ package core
 
 import org.scalatest.FunSpec
 
-import predicates.General
+import predicates.{General, Character}
 
 class MatchTreeSpec extends FunSpec {
 	implicit val series : Vector[Char] =
@@ -10,7 +10,7 @@ class MatchTreeSpec extends FunSpec {
 
 	describe("findAll") {
 		it("should return all matches for a query of size 1 that has a single match") {
-			val query = Query(General.equals('b'))
+			val query = Query(Character.isCharacter('b'))
 			val mt = MatchTree(query)
 			val node = ImmutableMatchNode(1, 0, Nil)
 
@@ -23,7 +23,7 @@ class MatchTreeSpec extends FunSpec {
 		}
 
 		it("should return no matches for a query of size 1 that doesn't match") {
-			val query = Query(General.equals('q'))
+			val query = Query(Character.isCharacter('q'))
 			val mt = MatchTree(query)
 
 			assert(mt.findAllMatches.isEmpty)
@@ -35,7 +35,7 @@ class MatchTreeSpec extends FunSpec {
 		}
 
 		it("should return all matches for a query of size 2 that has a single match") {
-			val query = Query(General.equals('b'), General.equals('c'))
+			val query = Query(Character.isCharacter('b'), General.equalsValue('c'))
 			val mt = MatchTree(query)
 			val cNode = ImmutableMatchNode(2, 1, Nil)
 			val bNode = ImmutableMatchNode(1, 0, List(cNode))
@@ -49,7 +49,7 @@ class MatchTreeSpec extends FunSpec {
 		}
 
 		it("should return all matches for a query of size 3 that has a single match") {
-			val query = Query(General.equals('b'), General.equals('c'), General.equals('d'))
+			val query = Query(Character.isCharacter('b'), General.equalsValue('c'), General.equalsValue('d'))
 			val mt = MatchTree(query)
 			val dNode = ImmutableMatchNode(3, 2, Nil)
 			val cNode = ImmutableMatchNode(2, 1, List(dNode))
@@ -64,7 +64,7 @@ class MatchTreeSpec extends FunSpec {
 		}
 
 		it("should return all matches for a query that is incomplete") {
-			val query = Query(General.equals('b'), General.equals('c'), General.equals('k') )
+			val query = Query(Character.isCharacter('b'), General.equalsValue('c'), General.equalsValue('k') )
 			val mt = MatchTree(query)
 			val cNode = ImmutableMatchNode(2, 1, Nil)
 			val bNode = ImmutableMatchNode(1, 0, List(cNode))
@@ -79,7 +79,7 @@ class MatchTreeSpec extends FunSpec {
 
 		it("should return all matches for a query that has multiple branches") {
 			implicit val series = Vector('a', 'b', 'b', 'c', 'b')
-			val query = Query(General.equals('a'), General.equals('b'), General.equals('c') )
+			val query = Query(Character.isCharacter('a'), General.equalsValue('b'), General.equalsValue('c') )
 			val mt = MatchTree(query)
 			val cNode = ImmutableMatchNode(3, 2, Nil)
 			val firstBNode = ImmutableMatchNode(1, 1, List(cNode))

@@ -17,13 +17,13 @@ object Predicates  {
 	}
 
 	val prevMatchContainsListing : MatchPredicate[ListingsDisplay] = {
-		Matches.previousMatchComparator(
+		Matches.comparePreviousMatch(
 			(prev: ListingsDisplay, cur: ListingEvent) => prev.listingIds.contains(cur.listingId)
 		)
 	}
 
 	val currentElementContainsListing : MatchPredicate[ListingEvent] =
-		Matches.previousMatchComparator(
+		Matches.comparePreviousMatch(
 			(prev: ListingEvent, cur: ListingsDisplay) => cur.listingIds.contains(prev.listingId)
 		)
 

@@ -10,7 +10,7 @@ class MatchTreeBuilder[T](query : Query[T])(implicit private val series : Vector
 
 	private def addStep(index : Int) : Unit = {
 		Node.allPathsWalk(root.children).foreach{ nodeList =>
-			val matchState = MatchState(nodeList.map(_.stepIndex), index)
+			val matchState = MatchState(nodeList.map(_.elementIndex), index)
 
 			if (isValidMatch(matchState)) {
 				nodeList.last.createAndAddChild(index)

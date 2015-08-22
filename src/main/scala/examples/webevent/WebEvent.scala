@@ -10,6 +10,10 @@ trait ListingsDisplay {
 	val listingIds: Seq[Long]
 }
 
+trait HasShop {
+	val shopId: Long
+}
+
 case class SearchEvent(
 	referrer: String,
 	url: String,
@@ -22,7 +26,13 @@ case class ListingEvent(
 	url: String,
 	pageId: Long,
 	listingId: Long,
-	shopId: Long) extends WebEvent {}
+	shopId: Long) extends WebEvent with HasShop{}
+
+case class ShopEvent(
+	referrer: String,
+	url: String,
+	pageId: Long,
+	shopId: Long) extends WebEvent with HasShop{}
 
 case class PurchaseEvent(
 	referrer: String,

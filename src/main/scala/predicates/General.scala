@@ -11,7 +11,8 @@ object General {
 	val wild : ElementPredicate[Any] =
 		(m: ElementState[Any]) => true
 
-	val missing = !wild
+	val missing =
+		!wild
 
 	def ofType[T: TypeTag] = {
 		def _ofType[T: TypeTag, U: ClassTag] : ElementPredicate[U] =

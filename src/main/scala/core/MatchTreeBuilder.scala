@@ -14,6 +14,8 @@ class MatchTreeBuilder[T](query : Query[T])(implicit private val series : Vector
 
 			if (isValidMatch(matchState)) {
 				nodeList.last.createAndAddChild(index)
+				println(nodeList)
+				println(nodeList.last.children)
 			}
 		}
 

@@ -50,9 +50,9 @@ object Node {
 	def breadthWalk[T <: Node[T]](node : T) : Iterator[T] =
 		breadthWalk(node.children, Iterator(node))
 
-	def allPathsWalk[T <: Node[T]](nodes: List[T]) =
+	def allPathsWalk[T <: Node[T]](nodes: List[T]) : Iterator[List[T]] =
 		pathWalk(true, nodes)
-
+// error is coming from the fact that i am passing a full stack without a head
 	def allPathsWalk[T <: Node[T]](node : T) : Iterator[List[T]] =
 		allPathsWalk(List(node))
 
@@ -62,6 +62,8 @@ object Node {
 	def terminalPathWalk[T <: Node[T]](nodes: List[T]) : Iterator[List[T]] =
 		pathWalk(false, nodes)
 
+//see if i can do this with only changing the head
+//thats why it is broken!!
 	@tailrec
 	private def pathWalk[T <: Node[T]](
 		includeAllNodes: Boolean,
@@ -72,17 +74,15 @@ object Node {
 
 		stack match {
 			case head::tail => {
-				val shouldDropHead = prefixCounts.headOption.map(_ == 0).getOrElse(false)
-
-				val p = if (shouldDropHead) prefix.tail else prefix
-				val pc = if (shouldDropHead) prefixCounts.tail else prefixCounts
-				val pc2 = if (!pc.isEmpty) (pc.head - 1) :: pc.tail else pc
+				val i = prefixCounts.indexWhere(_ > 0)
+				val p = prefix.drop(i)
+				val pc = prefixCounts.drop(i).map(_ + head.children.size - 1)
 
 				pathWalk(
 					includeAllNodes,
 					head.children ++ tail,
-					if (head.hasChildren) head :: p else p,
-					if (head.hasChildren) head.children.size :: pc2 else pc2,
+					head :: p,
+					head.children.size :: pc,
 					acc ++ (if (includeAllNodes || head.children.isEmpty) Iterator((head::p).reverse) else Iterator.empty)
 				)
 			}

@@ -43,6 +43,26 @@ class NodeSpec extends FunSpec {
 		a
 	}
 
+	/*
+	*
+	*           a
+	*        b      g
+	*     c     d
+	*  e   f      h
+	*/
+	def unbalancedTree(): SimpleNode = {
+		val a = SimpleNode("a")
+		val b = a.createAndAddChild("b")
+		val c = b.createAndAddChild("c")
+		val d = b.createAndAddChild("d")
+		val e = c.createAndAddChild("e")
+		val f = c.createAndAddChild("f")
+		val g = a.createAndAddChild("g")
+		val h = d.createAndAddChild("h")
+
+		a
+	}
+
 	def extractNodeLabels(collection : List[SimpleNode]) : List[String] =
 		collection.map(_.label)
 
@@ -115,6 +135,38 @@ class NodeSpec extends FunSpec {
 				)
 			)
 		}
+
+		it("should find all prefixes in a unbalancedTree") {
+			assert(
+				Node.allPathsWalk(unbalancedTree).map(extractNodeLabels).toList ==
+				List(
+					List("a"),
+					List("a", "b"),
+					List("a", "b", "c"),
+					List("a", "b", "c", "e"),
+					List("a", "b", "c", "f"),
+					List("a", "b", "d"),
+					List("a", "b", "d", "h"),
+					List("a", "g")
+				)
+			)
+		}
+
+		it("should find all prefixes in a shallow tree") {
+			val a = SimpleNode("a")
+			a.createAndAddChild("b")
+			a.createAndAddChild("c")
+
+			assert(
+				Node.allPathsWalk(a).map(extractNodeLabels).toList ==
+				List(
+					List("a"),
+					List("a", "b"),
+					List("a", "c")
+				)
+			)
+		}
+
 		it("should work with adding a child") {
 			val node = new MutableMatchNode(0, 0)
 			assert(Node.allPathsWalk[MutableMatchNode](node).size == 1)
@@ -176,6 +228,48 @@ class NodeSpec extends FunSpec {
 					List("d", "h"),
 					List("d", "i"),
 					List("d", "j")
+				)
+			)
+		}
+
+/*
+	*
+	*           a
+	*        b      g
+	*     c     d
+	*  e   f      
+	*/
+		it("should find all subtrees in a unbalancedTree") {
+			assert(
+				Node.terminalPathWalk(unbalancedTree).map(extractNodeLabels).toList ==
+				List(
+					List("a", "b", "c", "e"),
+					List("a", "b", "c", "f"),
+					List("a", "b", "d", "h"),
+					List("a", "g")
+				)
+			)
+		}
+
+		it("should find all subtrees in a single node") {
+			assert(
+				Node.terminalPathWalk(SimpleNode("a")).map(extractNodeLabels).toList ==
+				List(
+					List("a")
+				)
+			)
+		}
+
+		it("should find all subtrees in a shallow tree") {
+			val a = SimpleNode("a")
+			a.createAndAddChild("b")
+			a.createAndAddChild("c")
+
+			assert(
+				Node.terminalPathWalk(a).map(extractNodeLabels).toList ==
+				List(
+					List("a", "b"),
+					List("a", "c")
 				)
 			)
 		}

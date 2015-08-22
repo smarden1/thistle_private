@@ -52,6 +52,9 @@ class MatchTree[T](predicates : Query[T], val root : ImmutableMatchNode[T])(impl
             .sortBy(_._1)
             .map(_._2)
     }
+
+    def maxDepth(): Int =
+    	Math.max(Node.maxDepth(root) - 1, 0)
 }
 
 object MatchTree {

@@ -1,9 +1,9 @@
 package examples.webevent
 
 import predicates.General.ofType
-//import predicates.Indexes.intervening
+import predicates.Indexes.first
 import examples.webevent._
-import examples.webevent.Predicates.{clicked, referredBy, currentElementContainsListing}
+import examples.webevent.Predicates.{clicked, referredBy, currentElementContainsListing, sameShop}
 import core.Query
 
 object Queries {
@@ -20,13 +20,21 @@ object Queries {
 		ofType[PurchaseEvent] && referredBy && currentElementContainsListing
 	)
 
-	val PostLogin = Query(
-		ofType[SearchEvent]
-		//intervening(2)
+	val PurchasedIndirectlyFromSearch = Query(
+		ofType[SearchEvent],
+		ofType[ListingEvent] && clicked,
+		ofType[ListingEvent] && sameShop,
+		ofType[PurchaseEvent] && referredBy && currentElementContainsListing
 	)
 
-	// would be nice to be able to construct arbitrary long queries to find paths
-	// can make the query as long as the sequence if necessary?
+	def tabbedBrowsing(series: Seq[WebEvent]): Query[WebEvent] =
+		tabbedBrowsing(series.size)
+
+	def tabbedBrowsing(seriesSize: Int): Query[WebEvent] =
+		Query(
+			first,
+			(1 until seriesSize).map(i => !first && referredBy): _*
+		)
 }
 
 

@@ -1,5 +1,7 @@
 package core
 
+// optimize to take actual value?
+
 case class MatchState[+T](
 	previousMatchIndexes : Seq[Int],
 	override val elementIndex : Int)(implicit override val series : Vector[T]) extends ElementState[T](elementIndex) {
@@ -11,12 +13,11 @@ case class MatchState[+T](
 		previousMatchIndexes.map(Element(_))
 
 	def hasPreviousMatches : Boolean =
-		!previousMatches.isEmpty
+		!previousMatchIndexes.isEmpty
 
 	def previousMatchedIndex : Int =
 		previousMatchIndexes.last
 
-	// need to guard for being the first
 	def previousMatchedValue : T =
 		series(previousMatchedIndex)
 

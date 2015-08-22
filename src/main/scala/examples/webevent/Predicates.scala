@@ -7,8 +7,14 @@ import predicates.Matches
 object Predicates  {
 
 	val referredBy : MatchPredicate[WebEvent] = {
-		m : MatchState[WebEvent] =>
+		m : MatchState[WebEvent] => {
+			println("=======")
+			println("ref: " + m.value.referrer)
+			println("url: " +m.previousMatchedValue.url)
+			println("index: "+m.index.toString)
+			println("matches: "+m.previousMatchIndexes.toString)
 			m.value.referrer == m.previousMatchedValue.url
+		}
 	}
 
 	val samePage : MatchPredicate[WebEvent] = {
@@ -29,4 +35,9 @@ object Predicates  {
 
 	val clicked =
 		referredBy && prevMatchContainsListing
+
+	val sameShop =
+		Matches.comparePreviousMatch(
+			(prev: HasShop, cur: HasShop) => cur.shopId == prev.shopId
+		)
 }

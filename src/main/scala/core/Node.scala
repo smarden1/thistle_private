@@ -52,7 +52,7 @@ object Node {
 
 	def allPathsWalk[T <: Node[T]](nodes: List[T]) : Iterator[List[T]] =
 		pathWalk(true, nodes)
-// error is coming from the fact that i am passing a full stack without a head
+
 	def allPathsWalk[T <: Node[T]](node : T) : Iterator[List[T]] =
 		allPathsWalk(List(node))
 
@@ -62,10 +62,8 @@ object Node {
 	def terminalPathWalk[T <: Node[T]](nodes: List[T]) : Iterator[List[T]] =
 		pathWalk(false, nodes)
 
-//see if i can do this with only changing the head
-//thats why it is broken!!
 	@tailrec
-	private def pathWalk[T <: Node[T]](
+	def pathWalk[T <: Node[T]](
 		includeAllNodes: Boolean,
 		stack : List[T],
 		prefix : List[T] = Nil,
@@ -74,7 +72,8 @@ object Node {
 
 		stack match {
 			case head::tail => {
-				val i = prefixCounts.indexWhere(_ > 0)
+				val w = prefixCounts.indexWhere(_ > 0)
+				val i = if (w == -1) prefixCounts.size else w
 				val p = prefix.drop(i)
 				val pc = prefixCounts.drop(i).map(_ + head.children.size - 1)
 

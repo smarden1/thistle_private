@@ -232,13 +232,6 @@ class NodeSpec extends FunSpec {
 			)
 		}
 
-/*
-	*
-	*           a
-	*        b      g
-	*     c     d
-	*  e   f      
-	*/
 		it("should find all subtrees in a unbalancedTree") {
 			assert(
 				Node.terminalPathWalk(unbalancedTree).map(extractNodeLabels).toList ==

@@ -3,11 +3,11 @@ package predicates
 import core.{ElementPredicate, ElementState}
 
 object Character {
-	def isCharacter(char : Char) : ElementPredicate[Char] =
-		(ms : ElementState[Char]) => ms.value == char
+	def isCharacter(char: Char): ElementPredicate[Char] =
+		(ms: ElementState[Char]) => ms.value == char
 
-	def isInCharacterRange(startChar : Char, endChar : Char) : ElementPredicate[Char] = 
-		(m : ElementState[Char]) => {
+	def isInCharacterRange(startChar: Char, endChar: Char): ElementPredicate[Char] = 
+		(m: ElementState[Char]) => {
 			val charCode = m.value.toByte
 
 			charCode > startChar.toByte && charCode < endChar.toByte
@@ -32,5 +32,5 @@ object Character {
 		letter || digit || underscore
 
 	val whiteSpace =
-		(m : ElementState[Char]) => m.value.toByte < 33
+		(m: ElementState[Char]) => m.value.toByte < 33
 }

@@ -8,19 +8,19 @@ import predicates.Character._
 
 class PredicateSpec extends FunSpec {
 
-	implicit val series : Vector[Char] =
+	implicit val series: Vector[Char] =
 		Vector('a', 'b', 'c', 'd', 'e', 'f')
 
-	val charWild : MatchPredicate[Char] =
-		(m : MatchState[Char]) => true
+	val charWild: MatchPredicate[Char] =
+		(m: MatchState[Char]) => true
 
-	val stringWild : MatchPredicate[String] =
-		(m : MatchState[String]) => true
+	val stringWild: MatchPredicate[String] =
+		(m: MatchState[String]) => true
 
-	val elementStringWild : MatchPredicate[String] =
-		(m : ElementState[String]) => true
+	val elementStringWild: MatchPredicate[String] =
+		(m: ElementState[String]) => true
 
-	def predicateTypesMatch[T: TypeTag, U : TypeTag](first: T, second: U) : Boolean =
+	def predicateTypesMatch[T: TypeTag, U: TypeTag](first: T, second: U): Boolean =
   		typeOf[T].typeArgs == typeOf[U].typeArgs
 
 	describe("combining predicates") {

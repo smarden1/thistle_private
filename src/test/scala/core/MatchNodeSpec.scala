@@ -4,7 +4,7 @@ import org.scalatest.FunSpec
 
 class MatchNodeSpec extends FunSpec {
 
-	implicit val series : Vector[Char] =
+	implicit val series: Vector[Char] =
 		Vector('a', 'b', 'c', 'd', 'e', 'f')
 
 	describe("MutableMatchNode") {

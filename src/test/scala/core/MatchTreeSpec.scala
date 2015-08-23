@@ -5,7 +5,7 @@ import org.scalatest.FunSpec
 import predicates.{General, Character}
 
 class MatchTreeSpec extends FunSpec {
-	implicit val series : Vector[Char] =
+	implicit val series: Vector[Char] =
 		Vector('a', 'b', 'c', 'd', 'e', 'f')
 
 	describe("findAll") {

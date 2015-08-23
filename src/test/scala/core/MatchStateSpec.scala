@@ -4,7 +4,7 @@ import org.scalatest.FunSpec
 
 class MatchStateSpec extends FunSpec {
 
-	implicit val series : Vector[String] =
+	implicit val series: Vector[String] =
 		Vector("a", "b", "c", "d", "e", "f")
 
 	describe("previousMatchedValue") {

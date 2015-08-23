@@ -4,7 +4,7 @@ import org.scalatest.FunSpec
 
 class ElementSpec extends FunSpec {
 
-	implicit val series : Vector[String] =
+	implicit val series: Vector[String] =
 		Vector("a", "b", "c", "d", "e", "f")
 
 	describe("isHead") {

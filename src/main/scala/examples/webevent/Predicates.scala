@@ -5,24 +5,24 @@ import predicates.Matches
 
 object Predicates  {
 
-	val referredBy : MatchPredicate[WebEvent] = {
-		m : MatchState[WebEvent] =>
+	val referredBy: MatchPredicate[WebEvent] = {
+		m: MatchState[WebEvent] =>
 			m.value.referrer == m.previousMatchedValue.url
 	}
 
-	val samePage : MatchPredicate[WebEvent] = {
-		m : MatchState[WebEvent] =>
+	val samePage: MatchPredicate[WebEvent] = {
+		m: MatchState[WebEvent] =>
 			m.value.pageId == m.previousMatchedValue.pageId
 	}
 
-	val prevMatchContainsListing : MatchPredicate[ListingsDisplay] = {
+	val prevMatchContainsListing: MatchPredicate[ListingsDisplay] = {
 		Matches.comparePreviousMatch(
 			(prev: ListingsDisplay, cur: ListingEvent) =>
 				prev.listingIds.contains(cur.listingId)
 		)
 	}
 
-	val currentElementContainsListing : MatchPredicate[ListingEvent] =
+	val currentElementContainsListing: MatchPredicate[ListingEvent] =
 		Matches.comparePreviousMatch(
 			(prev: ListingEvent, cur: ListingsDisplay) =>
 				cur.listingIds.contains(prev.listingId)

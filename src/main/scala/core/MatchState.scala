@@ -3,52 +3,52 @@ package core
 // optimize to take actual value?
 
 case class MatchState[+T](
-	previousMatchIndexes : Seq[Int],
-	override val elementIndex : Int)(implicit override val series : Vector[T]) extends ElementState[T](elementIndex) {
+	previousMatchIndexes: Seq[Int],
+	override val elementIndex: Int)(implicit override val series: Vector[T]) extends ElementState[T](elementIndex) {
 
-	lazy val previousMatchValues : Seq[T] =
+	lazy val previousMatchValues: Seq[T] =
 		previousMatchIndexes.map(series(_))
 
-	def previousMatches() : Seq[Element[T]] =
+	def previousMatches(): Seq[Element[T]] =
 		previousMatchIndexes.map(Element(_))
 
-	def hasPreviousMatches : Boolean =
+	def hasPreviousMatches: Boolean =
 		!previousMatchIndexes.isEmpty
 
-	def previousMatchedIndex : Int =
+	def previousMatchedIndex: Int =
 		previousMatchIndexes.last
 
-	def previousMatchedValue : T =
+	def previousMatchedValue: T =
 		series(previousMatchedIndex)
 
-	def previousMatchedElement : Element[T] =
+	def previousMatchedElement: Element[T] =
 		Element(previousMatchedIndex)
 
-	def size : Int =
+	def size: Int =
 		previousMatchIndexes.size
 
-	def toElementState() : ElementState[T] =
+	def toElementState(): ElementState[T] =
 		ElementState(elementIndex)
 
-	def changeElementIndex(i : Int) : MatchState[T] =
+	def changeElementIndex(i: Int): MatchState[T] =
 		MatchState(previousMatchIndexes, i)(series)
 
-	override def toString() : String =
+	override def toString(): String =
 		"MatchState(%s, %s)".format(previousMatchIndexes, elementIndex)
 }
 
 // no previous matches
 class ElementState[+T](
-	val elementIndex : Int)(implicit val series : Vector[T]) extends ElementLike[T] {
+	val elementIndex: Int)(implicit val series: Vector[T]) extends ElementLike[T] {
 
 	lazy val element =
 		this.toElement
 
-	def toMatchState() : MatchState[T] =
+	def toMatchState(): MatchState[T] =
 		MatchState(Nil, elementIndex)
 }
 
 object ElementState {
-	def apply[T](elementIndex : Int)(implicit series : Vector[T]) : ElementState[T] =
+	def apply[T](elementIndex: Int)(implicit series: Vector[T]): ElementState[T] =
 		new ElementState(elementIndex)
 }

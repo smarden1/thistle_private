@@ -9,7 +9,7 @@ class NodeSpec extends FunSpec {
   	 *	  b       e
 	 *  c   d        f
 	 */	
-	def simpleTree() : SimpleNode = {
+	def simpleTree(): SimpleNode = {
 		val a = SimpleNode("a")
 		val b = a.createAndAddChild("b")
 		val c = b.createAndAddChild("c")
@@ -27,7 +27,7 @@ class NodeSpec extends FunSpec {
 	 *  k
 	 */	
 	
-	def complexTree() : SimpleNode = {
+	def complexTree(): SimpleNode = {
 		val a = SimpleNode("a")
 		val b = a.createAndAddChild("b")
 		val c = a.createAndAddChild("c")
@@ -63,7 +63,7 @@ class NodeSpec extends FunSpec {
 		a
 	}
 
-	def extractNodeLabels(collection : List[SimpleNode]) : List[String] =
+	def extractNodeLabels(collection: List[SimpleNode]): List[String] =
 		collection.map(_.label)
 
 	describe("depthWalk") {

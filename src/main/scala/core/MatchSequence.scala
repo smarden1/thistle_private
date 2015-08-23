@@ -1,10 +1,10 @@
 package core
 
 case class MatchSequence[T](sequence: Seq[T]) {
+	private lazy implicit val series =
+		sequence.toVector
 
-	private lazy implicit val series = sequence.toVector
-
-	def filter(ep : ElementPredicate[T]) =
+	def filter(ep: ElementPredicate[T]) =
 		series
 			.view
 			.zipWithIndex
@@ -15,7 +15,7 @@ case class MatchSequence[T](sequence: Seq[T]) {
 	def filterNot(es: ElementPredicate[T]) =
 		filter(!es)
 
-	def exists(es: ElementPredicate[T]) : Boolean =
+	def exists(es: ElementPredicate[T]): Boolean =
 		series
 			.zipWithIndex
 			.exists{case(k, i) => es(ElementState(i))}
@@ -23,10 +23,10 @@ case class MatchSequence[T](sequence: Seq[T]) {
 	def forall(es: ElementPredicate[T]) =
 		!exists(!es)
 
-	def count(es: ElementPredicate[T]) : Int =
+	def count(es: ElementPredicate[T]): Int =
 		filter(es).length
 
-	def find(ep: ElementPredicate[T]) : Option[T] =
+	def find(ep: ElementPredicate[T]): Option[T] =
 		series
 			.view
 			.zipWithIndex
@@ -34,7 +34,7 @@ case class MatchSequence[T](sequence: Seq[T]) {
 			.map(_._1)
 
 	// is there at least one completed query?
-	def exists(q: Query[T]) : Boolean =
+	def exists(q: Query[T]): Boolean =
 		!MatchTreeBuilder(q).findAllCompleteMatches.isEmpty
 }
 

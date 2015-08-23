@@ -9,10 +9,10 @@ import predicates.Indexes
 import predicates.Character._
 
 class MatchTreeBuilderSpec extends FunSpec {
-	implicit val series : Vector[Char] =
+	implicit val series: Vector[Char] =
 		Vector('a', 'b', 'c', 'd', 'e', 'f')
 
-	def numericSeries : Vector[Int] =
+	def numericSeries: Vector[Int] =
 		(0 to 10).toVector
 
 	describe("isValidMatch") {

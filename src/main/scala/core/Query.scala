@@ -1,6 +1,9 @@
 package core
 
-case class Query[T](headPredicate: ElementPredicate[T], tailPredicates : MatchPredicate[T]*) extends Seq[MatchPredicate[T]] {
+case class Query[T](
+	headPredicate: ElementPredicate[T],
+	tailPredicates : MatchPredicate[T]*) extends Seq[MatchPredicate[T]] {
+
 	def length: Int =
 		tailPredicates.length + 1
 

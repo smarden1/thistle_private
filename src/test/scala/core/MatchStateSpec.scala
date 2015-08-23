@@ -9,7 +9,8 @@ class MatchStateSpec extends FunSpec {
 
 	describe("previousMatchedValue") {
 		it("should return the last matched value if there is one") {
-			val ms = MatchState(List(1,2,3), 4)
+			val ms = MatchState(List(1, 2, 3), 4)
+
 			assert(ms.previousMatchedValue == "d")
 		}
 

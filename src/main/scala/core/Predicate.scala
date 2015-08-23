@@ -4,19 +4,34 @@ trait MatchPredicate[-T] {
 	def apply(matchState : MatchState[T]) : Boolean
 
 	def unary_! : MatchPredicate[T] =
-		AnonymousMatchPredicate( (matchState : MatchState[T]) => !this(matchState))
+		AnonymousMatchPredicate(
+			(matchState : MatchState[T]) =>
+				!this(matchState)
+		)
 
 	def && [U <: T](that : MatchPredicate[U]) : MatchPredicate[U] =
-		AnonymousMatchPredicate( (matchState : MatchState[U]) => this(matchState) && that(matchState))
+		AnonymousMatchPredicate(
+			(matchState : MatchState[U]) =>
+				this(matchState) && that(matchState)
+		)
 
 	def || [U <: T](that : MatchPredicate[U]) : MatchPredicate[U] =
-		AnonymousMatchPredicate( (matchState : MatchState[U]) => this(matchState) || that(matchState))
+		AnonymousMatchPredicate(
+			(matchState : MatchState[U]) =>
+				this(matchState) || that(matchState)
+		)
 
 	def - [U <: T](that : MatchPredicate[U]) : MatchPredicate[U] =
-		AnonymousMatchPredicate( (matchState : MatchState[U]) => this(matchState) && !that(matchState))
+		AnonymousMatchPredicate(
+			(matchState : MatchState[U]) =>
+				this(matchState) && !that(matchState)
+		)
 
 	def ^ [U <: T](that : MatchPredicate[U]) : MatchPredicate[U] =
-		AnonymousMatchPredicate( (matchState : MatchState[U]) => (this(matchState) || that(matchState) && !(this(matchState) && that(matchState))))
+		AnonymousMatchPredicate(
+			(matchState : MatchState[U]) =>
+				(this(matchState) || that(matchState) && !(this(matchState) && that(matchState)))
+		)
 }
 
 trait ElementPredicate[-T] extends MatchPredicate[T] {
@@ -26,19 +41,34 @@ trait ElementPredicate[-T] extends MatchPredicate[T] {
 		this(matchState.toElementState)
 
 	override def unary_! : ElementPredicate[T] =
-		AnonymousElementPredicate( (matchState : ElementState[T]) => !this(matchState))
+		AnonymousElementPredicate(
+			(matchState : ElementState[T]) =>
+				!this(matchState)
+		)
 
 	def && [U <: T](that : ElementPredicate[U]) : ElementPredicate[U] =
-		AnonymousElementPredicate( (matchState : ElementState[U]) => this(matchState) && that(matchState))
+		AnonymousElementPredicate(
+			(matchState : ElementState[U]) =>
+				this(matchState) && that(matchState)
+		)
 
 	def || [U <: T](that : ElementPredicate[U]) : ElementPredicate[U] =
-		AnonymousElementPredicate( (matchState : ElementState[U]) => this(matchState) || that(matchState))
+		AnonymousElementPredicate(
+			(matchState : ElementState[U]) =>
+				this(matchState) || that(matchState)
+		)
 
 	def - [U <: T](that : ElementPredicate[U]) : ElementPredicate[U] =
-		AnonymousElementPredicate( (matchState : ElementState[U]) => this(matchState) && !that(matchState))
+		AnonymousElementPredicate(
+			(matchState : ElementState[U]) =>
+				this(matchState) && !that(matchState)
+		)
 
 	def ^ [U <: T](that : ElementPredicate[U]) : ElementPredicate[U] =
-		AnonymousElementPredicate( (matchState : ElementState[U]) => (this(matchState) || that(matchState) && !(this(matchState) && that(matchState))))
+		AnonymousElementPredicate(
+			(matchState : ElementState[U]) =>
+				(this(matchState) || that(matchState) && !(this(matchState) && that(matchState)))
+		)
 }
 
 case class AnonymousMatchPredicate[-T](predicateFn : MatchState[T] => Boolean) extends MatchPredicate[T] {
@@ -51,13 +81,18 @@ case class AnonymousElementPredicate[-T](predicateFn : ElementState[T] => Boolea
 		predicateFn(elementState)
 }
 
-
 trait MatchPredicateImplicits {
 	implicit def matchPredicate2Anonymous[T](matchPredicate : MatchPredicate[T]) : AnonymousMatchPredicate[T] =
-		AnonymousMatchPredicate( (matchState : MatchState[T]) => matchPredicate(matchState))
+		AnonymousMatchPredicate(
+			(matchState : MatchState[T]) =>
+				matchPredicate(matchState)
+		)
 
 	implicit def elementPredicate2Anonymous[T](elementPredicate : ElementPredicate[T]) : AnonymousElementPredicate[T] =
-		AnonymousElementPredicate( (elementState : ElementState[T]) => elementPredicate(elementState))
+		AnonymousElementPredicate(
+			(elementState : ElementState[T]) =>
+				elementPredicate(elementState)
+		)
 
 	implicit def matchPredicateOption2Boolean[T](predicateFn : MatchState[T] => Option[Boolean]) : MatchState[T] => Boolean =
 		predicateFn.andThen {

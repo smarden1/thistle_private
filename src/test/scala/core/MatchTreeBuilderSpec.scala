@@ -20,10 +20,12 @@ class MatchTreeBuilderSpec extends FunSpec {
 			
 			val ms = MatchState(List(), 1)
 			val mt = new MatchTreeBuilder(Query(wild))
+
 			assert(mt.isValidMatch(ms))
 
 			val ms2 = MatchState(List(), 1)(numericSeries)
 			val mt2 = new MatchTreeBuilder(Query(Indexes.odd))(numericSeries)
+
 			assert(mt2.isValidMatch(ms2))
 		}
 
@@ -49,7 +51,6 @@ class MatchTreeBuilderSpec extends FunSpec {
 		}
 
 		it("should return false for a simple valid match regardless of previous matches") {
-			
 			val ms = MatchState(List(0), 1)
 			val mt = new MatchTreeBuilder(Query(!wild))
 			

@@ -6,7 +6,7 @@ import predicates.{Indexes, General}
 
 class MatchSequenceSpec extends FunSpec with MatchSequenceImplicits {
 
-	def example : Seq[Int] =
+	def example: Seq[Int] =
 		0 to 10
 
 	describe("filter") {

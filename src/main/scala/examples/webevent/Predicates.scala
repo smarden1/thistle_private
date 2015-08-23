@@ -1,20 +1,13 @@
 package examples.webevent
 
 import core.{MatchState, MatchPredicate, MatchPredicateImplicits, ElementState}
-
 import predicates.Matches
 
 object Predicates  {
 
 	val referredBy : MatchPredicate[WebEvent] = {
-		m : MatchState[WebEvent] => {
-			println("=======")
-			println("ref: " + m.value.referrer)
-			println("url: " +m.previousMatchedValue.url)
-			println("index: "+m.index.toString)
-			println("matches: "+m.previousMatchIndexes.toString)
+		m : MatchState[WebEvent] =>
 			m.value.referrer == m.previousMatchedValue.url
-		}
 	}
 
 	val samePage : MatchPredicate[WebEvent] = {
@@ -24,13 +17,15 @@ object Predicates  {
 
 	val prevMatchContainsListing : MatchPredicate[ListingsDisplay] = {
 		Matches.comparePreviousMatch(
-			(prev: ListingsDisplay, cur: ListingEvent) => prev.listingIds.contains(cur.listingId)
+			(prev: ListingsDisplay, cur: ListingEvent) =>
+				prev.listingIds.contains(cur.listingId)
 		)
 	}
 
 	val currentElementContainsListing : MatchPredicate[ListingEvent] =
 		Matches.comparePreviousMatch(
-			(prev: ListingEvent, cur: ListingsDisplay) => cur.listingIds.contains(prev.listingId)
+			(prev: ListingEvent, cur: ListingsDisplay) =>
+				cur.listingIds.contains(prev.listingId)
 		)
 
 	val clicked =
@@ -38,6 +33,7 @@ object Predicates  {
 
 	val sameShop =
 		Matches.comparePreviousMatch(
-			(prev: HasShop, cur: HasShop) => cur.shopId == prev.shopId
+			(prev: HasShop, cur: HasShop) =>
+				cur.shopId == prev.shopId
 		)
 }

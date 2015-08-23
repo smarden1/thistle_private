@@ -1,6 +1,8 @@
 package core
 
-class MatchTree[T](predicates : Query[T], val root : ImmutableMatchNode[T])(implicit private val series : Vector[T]) {
+class MatchTree[T](
+	predicates : Query[T],
+	val root : ImmutableMatchNode[T])(implicit private val series : Vector[T]) {
 
 	def iterator : Iterator[Match[T]] =
 		Node.terminalPathWalk(root.children).map(Match(_, predicates))

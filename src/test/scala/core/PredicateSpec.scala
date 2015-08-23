@@ -20,7 +20,7 @@ class PredicateSpec extends FunSpec {
 	val elementStringWild : MatchPredicate[String] =
 		(m : ElementState[String]) => true
 
-	def predicateTypesMatch[T: TypeTag, U : TypeTag](first : T, second : U) : Boolean =
+	def predicateTypesMatch[T: TypeTag, U : TypeTag](first: T, second: U) : Boolean =
   		typeOf[T].typeArgs == typeOf[U].typeArgs
 
 	describe("combining predicates") {
@@ -53,7 +53,7 @@ class PredicateSpec extends FunSpec {
 		}
 
 		it("should combine predicates and pick the lowest common denominator type") {
-			//assert(predicateTypesMatch(wild && charWild && stringWild, wild))
+			//assert(predicateTypesMatch(wild && charWild && stringWild, charWild))
 		}
 	}
 }

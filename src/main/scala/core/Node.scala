@@ -1,7 +1,6 @@
 package core
 
 import scala.collection.mutable.MutableList
-
 import scala.annotation.tailrec
 
 abstract class Node[T <: Node[T]]() extends Iterable[T] {

@@ -12,19 +12,19 @@ case class MatchSequence[T](sequence: Seq[T]) {
 			.map(_._1)
 			.force
 
-	def filterNot(es: ElementPredicate[T]) =
-		filter(!es)
+	def filterNot(ep: ElementPredicate[T]) =
+		filter(!ep)
 
-	def exists(es: ElementPredicate[T]): Boolean =
+	def exists(ep: ElementPredicate[T]): Boolean =
 		series
 			.zipWithIndex
-			.exists{case(k, i) => es(ElementState(i))}
+			.exists{case(k, i) => ep(ElementState(i))}
 
-	def forall(es: ElementPredicate[T]) =
-		!exists(!es)
+	def forall(ep: ElementPredicate[T]) =
+		!exists(!ep)
 
-	def count(es: ElementPredicate[T]): Int =
-		filter(es).length
+	def count(ep: ElementPredicate[T]): Int =
+		filter(ep).length
 
 	def find(ep: ElementPredicate[T]): Option[T] =
 		series

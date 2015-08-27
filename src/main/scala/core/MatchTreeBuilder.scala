@@ -1,4 +1,4 @@
-package core
+package thistle.core
 
 class MatchTreeBuilder[T](query: Query[T])(implicit private val series: Vector[T]) {
 

@@ -1,8 +1,8 @@
-package core
+package thistle.core
 
 import org.scalatest.FunSpec
 
-import predicates.{General, Character}
+import thistle.predicates.{General, Character}
 
 class MatchTreeSpec extends FunSpec {
 	implicit val series: Vector[Char] =

@@ -1,10 +1,11 @@
-package examples.webevent
+package thistle.examples.webevent
 
-import predicates.General.ofType
-import predicates.Indexes.first
-import examples.webevent._
-import examples.webevent.Predicates.{clicked, referredBy, currentElementContainsListing, sameShop}
-import core.Query
+import thistle.core.Query
+
+import thistle.predicates.General.ofType
+import thistle.predicates.Indexes.first
+import thistle.examples.webevent._
+import thistle.examples.webevent.Predicates.{clicked, referredBy, currentElementContainsListing, sameShop}
 
 object Queries {
 
@@ -36,16 +37,3 @@ object Queries {
 			(1 until seriesSize).map(i => !first && referredBy): _*
 		)
 }
-
-
-/*
-* traversing the results of a tree
-* find the count of siblings?
-* how many other listings from the same shop that were not purchased did we look at
-* do we want to make matchTree out of any root (just drop the heads of the query at this point or make it available on all nodes)
-*
-* do we want to make queries take trees instead of just single paths
-*
-*
-* some way to find endless matches so we can find tabbed browsing - maybe just extend the query to be the size of the input?
- */

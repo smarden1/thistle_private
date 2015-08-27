@@ -1,4 +1,4 @@
-package core
+package thistle.core
 
 import org.scalatest.FunSpec
 

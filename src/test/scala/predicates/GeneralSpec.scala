@@ -1,6 +1,6 @@
-package predicates
+package thistle.predicates
 
-import core.ElementState
+import thistle.core.ElementState
 import org.scalatest.FunSpec
 
 class GeneralSpec extends FunSpec {

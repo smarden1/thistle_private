@@ -1,6 +1,4 @@
-package core
-
-// optimize to take actual value?
+package thistle.core
 
 case class MatchState[+T](
 	previousMatchIndexes: Seq[Int],
@@ -37,7 +35,6 @@ case class MatchState[+T](
 		"MatchState(%s, %s)".format(previousMatchIndexes, elementIndex)
 }
 
-// no previous matches
 class ElementState[+T](
 	val elementIndex: Int)(implicit val series: Vector[T]) extends ElementLike[T] {
 

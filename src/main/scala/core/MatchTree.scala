@@ -1,4 +1,4 @@
-package core
+package thistle.core
 
 class MatchTree[T](
 	predicates: Query[T],
@@ -41,18 +41,18 @@ class MatchTree[T](
 		iterator.filter(_.isIncomplete)
 
 	def uniqueCountsPerStep(): List[Int] = {
-        val emptySetMap = (0 to predicates.size).map((_ -> Set[Int]())).toMap
+    val emptySetMap = (0 to predicates.size).map((_ -> Set[Int]())).toMap
 
-        iterator
-        	.flatMap(_.nodes)
-            .foldLeft(emptySetMap)(
-                (acc, node) =>
-                    acc + (node.stepIndex -> Set(node.elementIndex))
-            )
-            .mapValues(_.size)
-            .toList
-            .sortBy(_._1)
-            .map(_._2)
+    iterator
+      .flatMap(_.nodes)
+        .foldLeft(emptySetMap)(
+            (acc, node) =>
+                acc + (node.stepIndex -> Set(node.elementIndex))
+        )
+        .mapValues(_.size)
+        .toList
+        .sortBy(_._1)
+        .map(_._2)
     }
 
     def maxDepth(): Int =

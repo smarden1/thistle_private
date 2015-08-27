@@ -1,4 +1,4 @@
-package core
+package thistle.core
 
 case class Match[T](
 	nodes: List[ImmutableMatchNode[T]],

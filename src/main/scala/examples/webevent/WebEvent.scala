@@ -1,4 +1,4 @@
-package examples.webevent
+package thistle.examples.webevent
 
 trait WebEvent {
 	val referrer: String

@@ -1,4 +1,4 @@
-package core
+package thistle.core
 
 case class SimpleNode(label: String) extends MutableNode[SimpleNode]() {
 	def createAndAddChild(label: String): SimpleNode = {

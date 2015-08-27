@@ -1,4 +1,4 @@
-package core
+package thistle.core
 
 trait MatchPredicate[-T] {
 	def apply(matchState: MatchState[T]): Boolean

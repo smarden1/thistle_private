@@ -1,4 +1,4 @@
-package core
+package thistle.core
 
 case class Query[T](
 	headPredicate: ElementPredicate[T],

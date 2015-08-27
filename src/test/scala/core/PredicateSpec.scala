@@ -1,10 +1,10 @@
-package core
+package thistle.core
 
 import org.scalatest.FunSpec
 import scala.reflect.runtime.universe._
 
-import predicates.General._
-import predicates.Character._
+import thistle.predicates.General._
+import thistle.predicates.Character._
 
 class PredicateSpec extends FunSpec {
 

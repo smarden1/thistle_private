@@ -1,4 +1,4 @@
-package core
+package thistle.core
 
 trait ElementLike[+T] {
 	val elementIndex : Int

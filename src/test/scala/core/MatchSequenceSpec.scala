@@ -1,8 +1,8 @@
-package core
+package thistle.core
 
 import org.scalatest.FunSpec
 
-import predicates.{Indexes, General}
+import thistle.predicates.{Indexes, General}
 
 class MatchSequenceSpec extends FunSpec with MatchSequenceImplicits {
 

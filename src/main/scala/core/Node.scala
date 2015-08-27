@@ -1,4 +1,4 @@
-package core
+package thistle.core
 
 import scala.collection.mutable.MutableList
 import scala.annotation.tailrec

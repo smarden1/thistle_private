@@ -1,8 +1,8 @@
-package predicates
-
-import core.{MatchState, MatchPredicate, ElementState}
+package thistle.predicates
 
 import scala.reflect.{ClassTag, classTag}
+
+import thistle.core.{MatchState, MatchPredicate, ElementState}
 
 object Matches {
 	def comparePreviousMatch[T: ClassTag, U: ClassTag](prevMatchFn: (T, U) => Boolean): MatchPredicate[T] =

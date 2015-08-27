@@ -1,9 +1,9 @@
-package predicates
-
-import core.{ElementState, ElementPredicate, AnonymousElementPredicate}
+package thistle.predicates
 
 import scala.reflect.{ClassTag, classTag}
 import scala.reflect.runtime.universe._
+
+import thistle.core.{ElementState, ElementPredicate, AnonymousElementPredicate}
 
 object General {
 

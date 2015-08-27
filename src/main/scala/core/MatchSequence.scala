@@ -1,4 +1,4 @@
-package core
+package thistle.core
 
 case class MatchSequence[T](sequence: Seq[T]) {
 	private lazy implicit val series =

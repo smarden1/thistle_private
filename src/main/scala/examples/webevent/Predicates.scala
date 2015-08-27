@@ -1,7 +1,7 @@
-package examples.webevent
+package thistle.examples.webevent
 
-import core.{MatchState, MatchPredicate, MatchPredicateImplicits, ElementState}
-import predicates.Matches
+import thistle.core.{MatchState, MatchPredicate, MatchPredicateImplicits, ElementState}
+import thistle.predicates.Matches
 
 object Predicates  {
 

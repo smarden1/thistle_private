@@ -1,6 +1,6 @@
-package predicates
+package thistle.predicates
 
-import core.{ElementPredicate, ElementState}
+import thistle.core.{ElementPredicate, ElementState}
 
 object Character {
 	def isCharacter(char: Char): ElementPredicate[Char] =

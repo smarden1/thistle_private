@@ -1,6 +1,6 @@
-package predicates
+package thistle.predicates
 
-import core.{MatchState, ElementState, MatchPredicate, ElementPredicate}
+import thistle.core.{MatchState, ElementState, MatchPredicate, ElementPredicate}
 
 object Lookaround {
 	// applies this given predicate and sees if it matches n places behind

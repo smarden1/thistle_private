@@ -1,11 +1,11 @@
-package examples.webevent
+package thistle.examples.webevent
 
 import org.scalatest.FunSpec
 
-import core.{MatchSequence, MatchTree}
-import predicates.General._
-import core.{Query, Node}
-import examples.webevent.Predicates._
+import thistle.core.{MatchSequence, MatchTree}
+import thistle.predicates.General._
+import thistle.core.{Query, Node}
+import thistle.examples.webevent.Predicates._
 
 class QueriesTestSpec extends FunSpec {
 

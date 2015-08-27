@@ -1,4 +1,4 @@
-package core
+package thistle.core
 
 trait MatchNode[T <: Node[T]] extends Node[T] {
 	val elementIndex: Int

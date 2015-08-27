@@ -1,16 +1,16 @@
 package thistle.core
 
 case class SimpleNode(label: String) extends MutableNode[SimpleNode]() {
-	def createAndAddChild(label: String): SimpleNode = {
-		val node = SimpleNode(label)
-		addChild(node)
+  def createAndAddChild(label: String): SimpleNode = {
+    val node = SimpleNode(label)
+    addChild(node)
 
-		node
-	}
+    node
+  }
 
-	def iterator(): Iterator[SimpleNode] =
-		Node.depthWalk(this)
+  def iterator(): Iterator[SimpleNode] =
+    Node.depthWalk(this)
 
-	override def toString(): String =
-		"SimpleNode(%s)".format(label)
+  override def toString(): String =
+    "SimpleNode(%s)".format(label)
 }

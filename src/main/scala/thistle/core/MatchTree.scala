@@ -57,6 +57,12 @@ class MatchTree[T](
 
     def maxDepth(): Int =
       Math.max(Node.maxDepth(root) - 1, 0)
+
+    def depthWalk: Iterator[ImmutableMatchNode] =
+      Node.depthWalk(root.children)
+
+    def breadthWalk: Iterator[ImmutableMatchNode] =
+      Node.breadthWalk(root.children)
 }
 
 object MatchTree {

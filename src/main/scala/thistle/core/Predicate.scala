@@ -71,12 +71,12 @@ trait ElementPredicate[-T] extends MatchPredicate[T] {
     )
 }
 
-case class AnonymousMatchPredicate[-T](predicateFn: MatchState[T] => Boolean) extends MatchPredicate[T] {
+case class AnonymousMatchPredicate[T](predicateFn: MatchState[T] => Boolean) extends MatchPredicate[T] {
   def apply(matchState: MatchState[T]): Boolean =
     predicateFn(matchState)
 }
 
-case class AnonymousElementPredicate[-T](predicateFn: ElementState[T] => Boolean) extends ElementPredicate[T] {
+case class AnonymousElementPredicate[T](predicateFn: ElementState[T] => Boolean) extends ElementPredicate[T] {
   def apply(elementState: ElementState[T]): Boolean =
     predicateFn(elementState)
 }

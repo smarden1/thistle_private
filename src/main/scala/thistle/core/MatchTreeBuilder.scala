@@ -4,9 +4,11 @@ class MatchTreeBuilder[T](query: Query[T])(implicit private val series: Vector[T
 
   require(query.size > 0, "Query cannot be empty")
 
-  private val querySize = query.size
+  private val querySize =
+    query.size
 
-  private val root = new MutableMatchNode(-1, -1)
+  private val root =
+    new MutableMatchNode(-1, -1)
 
   private def addStep(index: Int): Unit = {
     Node.allPathsWalk(root.children).foreach{ nodeList =>

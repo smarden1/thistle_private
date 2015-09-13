@@ -19,7 +19,6 @@ object Lookaround {
   def previous[T](predicate: MatchPredicate[T]): MatchPredicate[T] =
     lookBehind(1, predicate)
 
-  //is slice a good name?
   def nextSlice[T](predicate: MatchPredicate[T]): MatchPredicate[T] =
     (m: MatchState[T]) => 
       lookaround(m.index, m.size, predicate)(m)
@@ -36,7 +35,6 @@ object Lookaround {
     (m: MatchState[T]) => 
       lookaround(0, m.index, predicate)(m)
 
-  // if there are no matches then this should be true
   def noIntervening[T](predicate: MatchPredicate[T]): MatchPredicate[T] =
     !intervening(predicate)
 

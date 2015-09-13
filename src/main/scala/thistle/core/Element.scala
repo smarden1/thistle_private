@@ -26,7 +26,7 @@ trait ElementLike[+T] {
     if (series.isDefinedAt(idx)) Some(Element(idx)) else None
 
   def offsetElement(offset: Int): Option[Element[T]] =
-    elementAtIndex(elementIndex + offset) // handle negative cases
+    elementAtIndex(elementIndex + offset)
 
   def previousElement(): Option[Element[T]] =
     elementAtIndex(elementIndex - 1)
@@ -44,7 +44,7 @@ trait ElementLike[+T] {
     series.lift(idx)
 
   def offsetValue(offset: Int): Option[T] =
-    valueAtIndex(elementIndex + offset) // handle negative cases
+    valueAtIndex(elementIndex + offset)
 
   def nextValue(): Option[T] =
     valueAtIndex(elementIndex + 1)

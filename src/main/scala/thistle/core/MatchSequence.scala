@@ -33,7 +33,6 @@ case class MatchSequence[T](sequence: Seq[T]) {
       .find{case(k, i) => ep(new ElementState(i){override lazy val value = k})}
       .map(_._1)
 
-  // is there at least one completed query?
   def exists(q: Query[T]): Boolean =
     !MatchTreeBuilder(q).allCompleteMatches.isEmpty
 }

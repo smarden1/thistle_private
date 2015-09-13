@@ -51,9 +51,5 @@ class PredicateSpec extends FunSpec {
       assert(predicateTypesMatch(wild && charWild, charWild))
       assert(predicateTypesMatch(wild && charWild, charWild && wild))
     }
-
-    it("should combine predicates and pick the lowest common denominator type") {
-      //assert(predicateTypesMatch(wild && charWild && stringWild, charWild))
-    }
   }
 }

@@ -35,7 +35,7 @@ case class MatchSequence[T](sequence: Seq[T]) {
 
   // is there at least one completed query?
   def exists(q: Query[T]): Boolean =
-    !MatchTreeBuilder(q).findAllCompleteMatches.isEmpty
+    !MatchTreeBuilder(q).allCompleteMatches.isEmpty
 }
 
 trait MatchSequenceImplicits {

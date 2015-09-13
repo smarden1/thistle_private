@@ -7,37 +7,37 @@ class MatchTree[T](
   def iterator: Iterator[Match[T]] =
     Node.terminalPathWalk(root.children).map(Match(_, predicates))
 
-  def findAllMatches(): Iterator[Match[T]] =
+  def allMatches(): Iterator[Match[T]] =
     iterator
 
-  def findAllValues(): Iterator[Seq[T]] =
-    findAllMatches.map(_.values)
+  def allValues(): Iterator[Seq[T]] =
+    allMatches.map(_.values)
 
-  def findAllIndexes(): Iterator[Seq[Int]] =
-    findAllMatches.map(_.indexes)
+  def allIndexes(): Iterator[Seq[Int]] =
+    allMatches.map(_.indexes)
 
-  def findAllCompleteValues(): Iterator[Seq[T]] =
-    findAllCompleteMatches.map(_.values)
+  def allCompleteValues(): Iterator[Seq[T]] =
+    allCompleteMatches.map(_.values)
 
-  def findAllIncompleteValues(): Iterator[Seq[T]] =
-    findAllIncompleteMatches.map(_.values)
+  def allIncompleteValues(): Iterator[Seq[T]] =
+    allIncompleteMatches.map(_.values)
 
-  def findAllCompleteIndexes(): Iterator[Seq[Int]] =
-    findAllCompleteMatches.map(_.indexes)
+  def allCompleteIndexes(): Iterator[Seq[Int]] =
+    allCompleteMatches.map(_.indexes)
 
-  def findAllIncompleteIndexes(): Iterator[Seq[Int]] =
-    findAllIncompleteMatches.map(_.indexes)
+  def allIncompleteIndexes(): Iterator[Seq[Int]] =
+    allIncompleteMatches.map(_.indexes)
 
-  def findAllCompleteNodes(): Iterator[Seq[ImmutableMatchNode[T]]] =
-    findAllCompleteMatches.map(_.nodes)
+  def allCompleteNodes(): Iterator[Seq[ImmutableMatchNode[T]]] =
+    allCompleteMatches.map(_.nodes)
 
-  def findAllIncompleteNodes(): Iterator[Seq[ImmutableMatchNode[T]]] =
-    findAllIncompleteMatches.map(_.nodes)
+  def allIncompleteNodes(): Iterator[Seq[ImmutableMatchNode[T]]] =
+    allIncompleteMatches.map(_.nodes)
 
-  def findAllCompleteMatches(): Iterator[Match[T]] =
+  def allCompleteMatches(): Iterator[Match[T]] =
     iterator.filter(_.isComplete)
 
-  def findAllIncompleteMatches(): Iterator[Match[T]] =
+  def allIncompleteMatches(): Iterator[Match[T]] =
     iterator.filter(_.isIncomplete)
 
   def uniqueCountsPerStep(): List[Int] = {

@@ -69,8 +69,8 @@ class QueriesTestSpec extends FunSpec {
 
       val mt = MatchTree(Queries.tabbedBrowsing(visit.size))(visit)
 
-      assert(mt.findAllCompleteMatches.size == 1)
-      assert(mt.findAllIndexes.toSet == expectedIndexes)
+      assert(mt.allCompleteMatches.size == 1)
+      assert(mt.allIndexes.toSet == expectedIndexes)
     }
 
     it("should find a single tab") {
@@ -88,8 +88,8 @@ class QueriesTestSpec extends FunSpec {
 
       val mt = MatchTree(Queries.tabbedBrowsing(visit.size))(visit)
 
-      assert(mt.findAllCompleteMatches.isEmpty)
-      assert(mt.findAllIndexes.toSet == expectedIndexes)
+      assert(mt.allCompleteMatches.isEmpty)
+      assert(mt.allIndexes.toSet == expectedIndexes)
     }
 
     it("should find tabs when they existss") {
@@ -118,8 +118,8 @@ class QueriesTestSpec extends FunSpec {
       val mt = MatchTree(Queries.tabbedBrowsing(visit.size))(visit)
       
       assert(mt.maxDepth == 4)
-      assert(mt.findAllCompleteMatches.isEmpty)
-      assert(mt.findAllIndexes.toSet == expectedIndexes)
+      assert(mt.allCompleteMatches.isEmpty)
+      assert(mt.allIndexes.toSet == expectedIndexes)
     }
 
     it("should find tabs when they exist") {
@@ -150,8 +150,8 @@ class QueriesTestSpec extends FunSpec {
 
       val mt = MatchTree(Queries.tabbedBrowsing(visit.size))(visit)
       assert(mt.maxDepth == 4)
-      assert(mt.findAllCompleteMatches.isEmpty)
-      assert(mt.findAllIndexes.toSet == expectedIndexes)
+      assert(mt.allCompleteMatches.isEmpty)
+      assert(mt.allIndexes.toSet == expectedIndexes)
     }
   }
 }

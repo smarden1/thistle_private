@@ -2,7 +2,7 @@ package thistle.core
 
 class MatchTree[T](
   predicates: Query[T],
-  val root: ImmutableMatchNode[T])(implicit private val series: Vector[T]) {
+  val root: ImmutableMatchNode[T])(implicit private val series: Vector[T]) extends Tree[ImmutableMatchNode[T]] {
 
   def iterator: Iterator[Match[T]] =
     Node.terminalPathWalk(root.children).map(Match(_, predicates))
@@ -54,15 +54,6 @@ class MatchTree[T](
         .sortBy(_._1)
         .map(_._2)
     }
-
-    def maxDepth(): Int =
-      Math.max(Node.maxDepth(root) - 1, 0)
-
-    def depthWalk: Iterator[ImmutableMatchNode] =
-      Node.depthWalk(root.children)
-
-    def breadthWalk: Iterator[ImmutableMatchNode] =
-      Node.breadthWalk(root.children)
 }
 
 object MatchTree {

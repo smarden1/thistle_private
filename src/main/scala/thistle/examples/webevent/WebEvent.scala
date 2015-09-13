@@ -4,6 +4,9 @@ trait WebEvent {
   val referrer: String
   val url: String
   val pageId: Long
+
+  def name =
+    this.getClass.getName.split("\\.").last
 }
 
 trait ListingsDisplay {
@@ -39,3 +42,8 @@ case class PurchaseEvent(
   url: String,
   pageId: Long,
   listingIds: Seq[Long]) extends WebEvent with ListingsDisplay{}
+
+case class DefaultWebEvent(
+  referrer: String,
+  url: String,
+  pageId: Long) extends WebEvent {}

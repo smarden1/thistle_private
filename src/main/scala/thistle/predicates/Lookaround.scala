@@ -49,7 +49,8 @@ object Lookaround {
 
   private def lookAt[T](n: Int, predicate: ElementPredicate[T]): ElementPredicate[T] =
     (m: ElementState[T]) => {
-      m.series.size <= n &&
+      n > 0 &&
+        m.series.size > n &&
         predicate(ElementState(n)(m.series))
     }
 }

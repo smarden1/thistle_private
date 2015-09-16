@@ -34,7 +34,7 @@ case class MatchSequence[T](sequence: Seq[T]) {
       .map(_._1)
 
   def exists(q: Query[T]): Boolean =
-    !MatchTreeBuilder(q).allCompleteMatches.isEmpty
+    MatchTreeBuilder(q).isComplete
 }
 
 trait MatchSequenceImplicits {

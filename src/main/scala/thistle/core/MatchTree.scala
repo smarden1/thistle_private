@@ -7,6 +7,9 @@ class MatchTree[T](
   def iterator: Iterator[Match[T]] =
     Node.terminalPathWalk(root.children).map(Match(_, predicates))
 
+  def isComplete(): Boolean =
+    !allCompleteMatches.isEmpty
+
   def allMatches(): Iterator[Match[T]] =
     iterator
 
@@ -41,13 +44,13 @@ class MatchTree[T](
     iterator.filter(_.isIncomplete)
 
   def uniqueCountsPerStep(): List[Int] = {
-    val emptySetMap = (0 to predicates.size).map((_ -> Set[Int]())).toMap
+    val emptySetMap = (0 until predicates.size).map((_ -> Set[Int]())).toMap
 
     iterator
       .flatMap(_.nodes)
         .foldLeft(emptySetMap)(
             (acc, node) =>
-                acc + (node.stepIndex -> Set(node.elementIndex))
+                acc.updated(node.stepIndex, Set(node.elementIndex) ++ acc.getOrElse(node.stepIndex, Set()))
         )
         .mapValues(_.size)
         .toList

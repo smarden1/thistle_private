@@ -98,4 +98,14 @@ class MatchTreeSpec extends FunSpec {
       assert(mt.allIncompleteMatches.toList == List(match3))
     }
   }
+
+  describe("uniqueCountsPerStep") {
+    it("should count unique counts") {
+      implicit val series = Vector('a', 'b', 'b', 'c', 'b')
+      val query = Query(Character.isCharacter('a'), General.equalsValue('b'), General.equalsValue('c') )
+      val mt = MatchTree(query)
+
+      assert(mt.uniqueCountsPerStep == List(1, 3, 1))
+    }
+  }
 }

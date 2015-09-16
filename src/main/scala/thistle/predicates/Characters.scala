@@ -25,6 +25,10 @@ object Character {
   val letter =
     upperCaseLetter || lowerCaseLetter
 
+  def isVowel(): ElementPredicate[Char] =
+    (ms: ElementState[Char]) =>
+      Set('a', 'e', 'i', 'o', 'u', 'y', 'A', 'E', 'I', 'O', 'U', 'Y').contains(ms.value)
+
   val underscore =
     isCharacter(new Character(95))
 

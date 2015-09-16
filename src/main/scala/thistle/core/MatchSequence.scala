@@ -44,3 +44,5 @@ trait MatchSequenceImplicits {
   implicit def matchSequence2Sequence[T](matchSequence: MatchSequence[T]): Seq[T] =
     matchSequence.sequence
 }
+
+object MatchSequence extends MatchSequenceImplicits {}

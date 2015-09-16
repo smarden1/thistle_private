@@ -12,7 +12,7 @@ object Queries {
   val PurchasedFromSearch = Query(
     ofType[SearchEvent],
     ofType[ListingEvent] && clicked,
-    ofType[PurchaseEvent] && referredBy && currentElementContainsListing
+    ofType[PurchaseEvent] && currentElementContainsListing
   )
 
   val PurchaseChannel = Query(
